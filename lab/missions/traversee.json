@@ -1,0 +1,15 @@
+{
+  "id": "traversee",
+  "stages": [
+    {"id":"depart","title":"01 · Une première traversée","objective":"Atteindre l’étoile sur une ligne droite. Prévois le nombre de pas, puis programme une boucle.","hints":["Observe les coordonnées de départ et de l’étoile : combien de déplacements les séparent ?","Une boucle for peut répéter une commande. range(n) produit n itérations.","Essaie for i in range(distance): suivi de duck.avancer() indenté. Teste ensuite une autre distance."],"terrains":[
+      {"id":"court","name":"Départ accessible","width":6,"height":3,"start":[0,1],"goal":[3,1],"heading":1,"obstacles":[]},
+      {"id":"long","name":"Transfert · ligne plus longue","width":8,"height":3,"start":[0,1],"goal":[6,1],"heading":1,"obstacles":[]}
+    ]},
+    {"id":"capteurs","title":"02 · Observer avant d’avancer","objective":"Écrire un même programme pour toutes les lignes droites, sans connaître leur longueur. L’étoile se trouve juste avant un obstacle ou un bord.","hints":["Le capteur obstacle_devant() renvoie un booléen. Un bord compte comme un obstacle.","Une boucle while peut continuer tant que le chemin est libre. Pense à not.","Répète duck.avancer() tant que not duck.obstacle_devant(). Explique pourquoi le robot s’arrête."],"terrains":[
+      {"id":"mur","name":"Obstacle proche","width":7,"height":3,"start":[0,1],"goal":[2,1],"heading":1,"obstacles":[[3,1]]},
+      {"id":"mur-loin","name":"Obstacle éloigné","width":9,"height":3,"start":[0,1],"goal":[6,1],"heading":1,"obstacles":[[7,1]]},
+      {"id":"bord","name":"Arrêt au bord","width":5,"height":3,"start":[0,1],"goal":[4,1],"heading":1,"obstacles":[]},
+      {"id":"zero","name":"Cas limite · déjà arrivé","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}
+    ]}
+  ]
+}
