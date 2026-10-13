@@ -1,0 +1,1 @@
+{"name":"microduck-lab","private":true,"type":"module","scripts":{"serve":"node tests/server.mjs","test":"python -m unittest discover -s tests -p test_*.py","test:e2e":"node tests/browser.mjs"},"devDependencies":{"playwright":"1.58.2"}}

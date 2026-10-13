@@ -1,0 +1,70 @@
+[
+  {
+    "name": "Python inédit : variables, fonction, calcul, print",
+    "status": "PASS"
+  },
+  {
+    "name": "Stop interrompt une boucle infinie et recrée le Worker",
+    "status": "PASS"
+  },
+  {
+    "name": "Exception puis exécution suivante",
+    "status": "PASS"
+  },
+  {
+    "name": "Syntaxe et comportement incorrect distingués",
+    "status": "PASS"
+  },
+  {
+    "name": "Limites actions et sorties",
+    "status": "PASS"
+  },
+  {
+    "name": "Délai maximal puis reprise",
+    "status": "PASS"
+  },
+  {
+    "name": "Collisions et capteurs",
+    "status": "PASS"
+  },
+  {
+    "name": "Même programme sur quatre terrains, résultats reproductibles",
+    "status": "PASS"
+  },
+  {
+    "name": "Changements d’étape et exécutions sans traces mélangées",
+    "status": "PASS"
+  },
+  {
+    "name": "Modes clair sombre vidéoprojecteur et clavier ordinateur",
+    "status": "PASS"
+  },
+  {
+    "name": "Mobile : rendu, commandes, absence de débordement",
+    "status": "PASS"
+  },
+  {
+    "name": "Mobile dans les trois modes",
+    "status": "PASS"
+  },
+  {
+    "name": "Indices progressifs, reset et sauvegarde locale",
+    "status": "PASS"
+  },
+  {
+    "name": "Restitution animée et Stop annule une trace ancienne",
+    "status": "PASS"
+  },
+  {
+    "name": "Limite de taille du programme",
+    "status": "PASS"
+  },
+  {
+    "name": "Chemin GitHub Pages et absence d’erreurs JavaScript",
+    "status": "PASS"
+  },
+  {
+    "name": "Échec réseau explicite, interface utilisable",
+    "status": "PASS"
+  }
+]
