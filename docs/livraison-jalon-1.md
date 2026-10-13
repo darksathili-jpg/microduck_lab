@@ -11,7 +11,7 @@ Outillage : `package.json`, `package-lock.json`, `.gitignore`, `tests/{server,br
 - Modules JavaScript : contrôles de syntaxe Node réussis.
 - Chemin `/microduck_lab/lab/` : servi et testé localement avec ce préfixe ; aucun déploiement GitHub Pages effectué.
 - Captures ordinateur/mobile examinées ; absence de débordement testée dans les trois modes sur mobile, navigation Tab/Maj+Tab autour de l’éditeur vérifiée.
-- Préservation institutionnelle : empreintes avant/après et égalité octet par octet avec `main`, dans `test-results/preservation.json`.
+- Préservation institutionnelle : empreintes du fichier avant/après identiques et contenu Git identique à `main`, dans `test-results/preservation.json`. Le fichier Windows est en CRLF, le blob Git en LF ; les empreintes du fichier prouvent la préservation de ses octets.
 
 Les résultats détaillés sont conservés dans `test-results/browser.json` et `test-results/python.txt`. Les captures `desktop.png` et `mobile.png` restent locales et ignorées par Git.
 

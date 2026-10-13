@@ -3,5 +3,8 @@
   "sha256_before": "CFEFF8EABEC9E9461C782971E7DD43471690C09D5C58C74D586BE2E3B017720D",
   "sha256_after": "CFEFF8EABEC9E9461C782971E7DD43471690C09D5C58C74D586BE2E3B017720D",
   "hashes_equal": true,
-  "bytes_equal_to_main": false
+  "git_blob_main": "2143c3ee2a5c23c7a2f0d49f26ddf40699e3df42",
+  "git_blob_working": "2143c3ee2a5c23c7a2f0d49f26ddf40699e3df42",
+  "git_content_equal_to_main": true,
+  "note": "Working file SHA-256 proves byte preservation; Git comparison applies configured CRLF/LF normalization."
 }
