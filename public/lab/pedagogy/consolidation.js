@@ -1,0 +1,106 @@
+// Two bounded consolidations. No access to the simulator's internal trace.
+const make=(id,title,objective,required,commands,terrain,prerequisites,course,example,prediction,work,explain,hints,cases,starter='# Écris ton programme Python ici.\n',type='Application')=>({
+ id,title,stage:'atelier',terrain,prerequisites,course,example,prediction,task:work.join(' '),explain,hints,cases,starter,
+ spec:{title,objective,required,commands,work,forbidden:[],type}
+});
+const controlCommands=['obstacle_devant','avancer'];
+const controlCases=output=>({'contrat-court':{goal:true,actions:2,output},'contrat-autre':{goal:true,actions:2,output}});
+const positions=(n,x=0,y=1,dx=1)=>'['+Array.from({length:n+1},(_,i)=>`(${x+dx*i}, ${y})`).join(', ')+']';
+const traceCases=fn=>Object.fromEntries([['trace-courte',2],['trace-longue',4],['trace-zero',0]].map(([id,n])=>[id,{goal:true,actions:n,output:fn(n)}]));
+// Reuse the collector learned in A1 for a runnable debugging program, in full view.
+const collectForDebug='def relever_positions(x, y, dx):\n    positions = [(x, y)]\n    while not duck.obstacle_devant():\n        duck.avancer()\n        x += dx\n        positions.append((x, y))\n    return positions\n';
+export const consolidationCourses={
+ fiabilite:[
+ make('f1','Spécifier et tester un nombre de commandes','Précondition, postcondition et assert',['function','parameter','return','assert'],[],'contrat-court',
+ 'Traversée S6 : fonction, paramètre entier et retour ; comparaison >= et ==.',
+ 'Un contrat précise les entrées admises et le résultat promis. Ici n est fourni comme entier ; valider_nombre(n) exige n >= 0 et renvoie cet entier inchangé. assert condition lève AssertionError si la condition est fausse. Une assertion aide au test, mais ne prouve pas tous les cas et ne constitue pas un arrêt sûr de robot physique. Les assertions peuvent être désactivées en Python optimisé.',
+ 'n = 0\nassert n >= 0\nprint(n)',
+ 'Prévoir le retour pour 0 et 2. Que doit-il se passer pour -1 ? Le robot doit-il bouger ?',
+ ['Écrire valider_nombre(n), avec une assertion de précondition n >= 0 puis le retour de n. Les arguments fournis sont des entiers ; la vérification de type n’est pas demandée.','Appeler la fonction dans deux assertions qui vérifient ses retours pour 0 et 2. Afficher ensuite exactement contrat verifie, sans mouvement.','Essayer séparément -1 : prévoir puis constater AssertionError. Ce dernier essai doit échouer ; rétablir le jeu valide pour le contrôle courant.'],
+ 'Distinguer hypothèse sur l’entrée, résultat promis et exemple testé. Pourquoi deux tests réussis ne prouvent-ils pas tous les entiers ?',
+ ['Distingue ce que l’appelant fournit et ce que la fonction doit garantir.','Le cas zéro est autorisé ; une condition strictement positive serait trop restrictive.','Place la précondition avant le return ; écris ensuite des assertions sur deux appels, pas seulement un print.'],
+ {'contrat-court':{actions:0,output:'contrat verifie'},'contrat-autre':{actions:0,output:'contrat verifie'}}),
+ make('f2','Définir une commande répétée avec un contrat','Fonction paramétrée, for et assertions',['function','parameter','return','for','assert','sensor'],controlCommands,'contrat-court',
+ 'F1 ; boucle for, capteur booléen et indentation.',
+ 'avancer_n(n) reçoit un entier n >= 0. Avant chaque déplacement, l’assertion de case libre vérifie la précondition locale. En cas de blocage après des pas déjà réalisés, ceux-ci ne sont pas annulés : la fonction n’est pas transactionnelle. Sans erreur, elle effectue n pas et renvoie n. Le moteur conserve ses propres contrôles de collision indépendants.',
+ 'assert not duck.obstacle_devant()\nprint("case libre")',
+ 'Annoncer les effets de deux appels successifs : d’abord 0, puis 2. Distinguer le retour et le nombre total de déplacements.',
+ ['Définir avancer_n(n). Vérifier n >= 0 avec assert avant toute action ; utiliser for, vérifier le capteur avant chaque pas, puis renvoyer n.','Sur chacun des deux terrains, appeler successivement avancer_n(0) et avancer_n(2), puis afficher leurs retours sur une ligne : 0 2. Deux déplacements sont attendus au total.','Expliquer ce qui arrive si n est négatif ou si une case devient bloquée : les assertions signalent un contrat non respecté, sans remplacer la sécurité matérielle.'],
+ 'Montrer les préconditions et la postcondition. Justifier que zéro ne déclenche aucun déplacement ; distinguer test local et garantie physique.',
+ ['Quel contrôle peut être effectué avant même de lire le capteur ?','Le capteur doit être relu avant chaque nouvelle action, pas seulement au départ.','Sépare précondition sur n, répétition de n actions autorisées et retour après la boucle.'],controlCases('0 2')),
+ make('f3','Distinguer un compteur local d’une variable extérieure','Portée locale et valeur de retour',['function','parameter','return','for','assert','sensor'],controlCommands,'contrat-court',
+ 'F2 ; affectation et incrémentation.',
+ 'Une affectation dans une fonction crée ici une variable locale. Un nom identique hors de la fonction désigne une autre liaison. On transmet le résultat par return plutôt que de modifier une variable globale. L’objectif est de distinguer ces portées, pas d’utiliser global.',
+ 'compte = 99\ndef exemple():\n    compte = 0\n    return compte\nprint(exemple(), compte)',
+ 'Prévoir les deux valeurs de l’exemple. Pourquoi le compte extérieur ne doit-il pas devenir le nombre de pas ?',
+ ['Initialiser compte = 99 hors de la fonction. Définir avancer_n(n) avec un compteur local compte, les contrôles de F2 et une boucle for. Renvoyer le compteur local après les n pas.','Appeler avancer_n(2), afficher son retour, puis afficher la variable compte extérieure sur une seconde ligne. Attendu : 2 puis 99. Ne pas employer global.'],
+ 'Identifier les deux liaisons du nom compte. Expliquer pourquoi l’affichage de 99 n’implique pas 99 déplacements.',
+ ['Repère l’endroit de chaque affectation par rapport à def.','Le résultat de la fonction et la variable extérieure peuvent avoir des valeurs différentes.','Initialise le compteur dans la fonction ; renvoie-le, sans affecter le nom extérieur.'],controlCases('2\n99'),
+ 'compte = 99\n\ndef avancer_n(n):\n    assert n >= 0\n    # À compléter 1 : initialiser ici la variable locale compte.\n    for i in range(n):\n        assert not duck.obstacle_devant()\n        duck.avancer()\n        # À compléter 2 : incrémenter la variable locale après ce pas.\n    # À compléter 3 : renvoyer la valeur de la variable locale après la boucle.\n\nprint(avancer_n(2))\nprint(compte)\n'),
+ make('f4','Corriger une boucle grâce au cas zéro','Débogage par assertions de postcondition',['function','parameter','return','for','assert','sensor'],controlCommands,'contrat-court',
+ 'F2 ; AssertionError, compteur et borne de range.',
+ 'Un test sur zéro détecte une boucle qui effectue toujours au moins un pas. Le robot peut avoir exécuté une action avant que l’assertion finale signale l’erreur ; l’exception ne rembobine pas le monde. Corriger la cause avant de relancer depuis le départ.',
+ 'print(list(range(1)))',
+ 'Prévoir le déplacement indésirable et la première assertion en échec dans le programme fourni.',
+ ['Exécuter le programme erroné et relever la cause de l’échec du test avancer_n(0). Corriger la borne de la boucle sans supprimer les tests.','Conserver les préconditions et vérifier par assert que les retours des appels successifs 0 et 2 valent respectivement 0 et 2. Afficher ensuite tests reussis. Le total attendu est de deux déplacements.'],
+ 'Expliquer pourquoi enlever assert masquerait le défaut. Distinguer erreur logique de borne et exception qui la révèle.',
+ ['Déroule le cas zéro avant de considérer le cas normal.','Combien de valeurs produit range(n + 1) lorsque n vaut zéro ?','Corrige le nombre de répétitions ; conserve le compteur et les assertions qui comparent les retours.'],controlCases('tests reussis'),
+ 'def avancer_n(n):\n    assert n >= 0\n    compte = 0\n    for i in range(n + 1):\n        assert not duck.obstacle_devant()\n        duck.avancer()\n        compte += 1\n    return compte\nassert avancer_n(0) == 0\nassert avancer_n(2) == 2\nprint("tests reussis")\n'),
+ make('transfert','Réutiliser un contrat sur un autre départ','Fonction, préconditions et tests de transfert',['function','parameter','return','assert','sensor'],controlCommands,'contrat-court',
+ 'F1–F4 ; lire position et cap du terrain révélé.',
+ 'Un contrat relatif à la case devant reste indépendant du cap Est. Il faut néanmoins vérifier le nombre de cases libres avant d’appeler la fonction. Plusieurs formes de boucle sont admises dans ce transfert.',null,
+ 'Après révélation : annoncer le nombre de pas, les retours pour zéro puis la distance au but, et la position finale.',
+ ['Révéler le transfert à la demande de l’enseignant. Déterminer la distance au but avec la grille, puis réutiliser avancer_n(n), avec ses assertions.','Appeler d’abord la fonction pour zéro, puis pour la distance déterminée. Afficher les deux retours séparés par un espace et justifier le contrat sur ce nouveau cap. Ne pas adapter les coordonnées du robot par affectation.'],
+ 'Justifier la réutilisation de la fonction et proposer un cas invalide. L’enseignant examine les assertions, le rôle du paramètre et l’autonomie.',
+ ['Vérifie les préconditions à partir des données révélées.','La commande avancer dépend du cap courant, pas du signe choisi mentalement pour x.','Réutilise le contrat ; une nouvelle longueur doit changer l’argument, pas le corps de la fonction.'],
+ {'fiabilite-reserve':{goal:true,actions:3,output:'0 3'}},null,'Transfert')
+ ],
+ analyse:[
+ make('a1','Construire le journal logique des cases parcourues','Liste de tuples et collecte dans une fonction',['function','parameter','return','list','tuple','append','while','sensor'],controlCommands,'trace-courte',
+ 'Mémorise M3 et Cartographie C2 ; x, y et dx connus au départ.',
+ 'La trace interne du moteur n’est pas accessible par duck.trace. Le programme construit son propre journal : une liste de tuples homogènes de coordonnées. Enregistrer le départ, puis la nouvelle position après chaque pas accepté. dx vaut 1 vers l’Est ou -1 vers l’Ouest ; y est constant sur ces terrains. Ce suivi logique ne mesure pas une localisation physique.',
+ 'positions = [(0, 1)]\npositions.append((1, 1))\nprint(positions)',
+ 'Prévoir le journal après deux pas, puis lorsqu’aucun pas n’est possible. La case de départ doit-elle apparaître ?',
+ ['Définir relever_positions(x, y, dx), qui construit une liste contenant le départ. Avec while et le capteur, avancer tant que la case devant est libre ; après chaque pas, mettre x à jour puis ajouter le tuple. Renvoyer la liste.','Afficher relever_positions(0, 1, 1) sur les trois terrains. Pour deux pas : [(0, 1), (1, 1), (2, 1)]. Pour zéro pas, conserver uniquement le départ.'],
+ 'Justifier la relation longueur du journal = déplacements + 1, et pourquoi ajouter la case après le déplacement accepté.',
+ ['Distingue une case visitée d’une action.','Le départ existe même si la boucle ne s’exécute jamais.','Initialise la liste avec le départ ; après chaque avance, calcule x + dx et ajoute la nouvelle paire.'],traceCases(n=>positions(n))),
+ make('a2','Chercher une case par parcours séquentiel','Recherche d’occurrence, indice et valeur sentinelle',['function','parameter','return','for','if','list','sensor'],controlCommands,'trace-courte',
+ 'A1 ; indices de liste et comparaison de tuples.',
+ 'chercher(positions, cible) renvoie l’indice de la première occurrence, ou -1 si la cible est absente. Parcourir les indices dans l’ordre ; ne pas confondre indice 0 et absence. Ici la recherche est écrite par l’élève, sans list.index. Le journal reste inchangé.',
+ 'print((1, 1) == (1, 1))\nprint((0, 1) == (1, 1))',
+ 'Prévoir le résultat pour (1, 1), puis (9, 1), dans les journaux de deux, quatre et zéro pas.',
+ ['Réutiliser relever_positions(0, 1, 1) pour obtenir les données du robot. Écrire chercher(positions, cible) avec for et if : renvoyer le premier indice de l’élément recherché, sinon -1. Un parcours par range ou enumerate est admis ; ne pas utiliser list.index.','Afficher les résultats de deux appels, pour les cibles (1, 1) et (9, 1), séparés par un espace. Attendu pour deux pas : 1 -1 ; pour zéro pas : -1 -1.','Tester aussi la fonction seule avec une liste vide et une liste contenant deux occurrences ; elle doit renvoyer respectivement -1 et le premier indice.'],
+ 'Expliquer la sentinelle -1, le retour immédiat et le cas vide. Avant l’indice i, aucune des cases précédentes ne doit correspondre à la cible.',
+ ['Décris en mots ce que la recherche doit renvoyer quand elle ne trouve rien.','La recherche s’arrête à la première égalité, pas après la dernière.','Place le retour -1 après la boucle ; l’indice trouvé est renvoyé dans le test d’égalité.'],traceCases(n=>(n?'1':'-1')+' -1'),
+ '# Outil fourni : collecte des positions, départ inclus.\n# x, y : départ ; dx : 1 vers l’Est, -1 vers l’Ouest.\n'+collectForDebug+'\n# À toi d’écrire chercher(positions, cible).\n# La recherche et le programme principal restent à programmer.\n'),
+ make('a3','Compter les comparaisons d’une recherche','Coût élémentaire et tuple de retour',['function','parameter','return','for','if','tuple','list','sensor'],controlCommands,'trace-courte',
+ 'A2 ; compteur et décomposition d’un tuple.',
+ 'Une opération comptée est ici une comparaison position == cible, pas une action du robot ni une milliseconde. chercher_compte renvoie (indice, comparaisons). Une cible au départ coûte une comparaison ; une cible absente coûte len(positions) comparaisons. Cette dépendance décrit un coût linéaire dans le pire cas, pas une mesure universelle du temps.',
+ 'indice, comparaisons = (0, 1)\nprint(indice, comparaisons)',
+ 'Pour une liste de trois cases, prévoir les deux comptes : cible au début et cible absente. Étendre le raisonnement à N cases.',
+ ['Réutiliser le journal de A1. Écrire chercher_compte(positions, cible), avec un parcours for et une condition ; incrémenter le compteur une fois par comparaison et renvoyer le tuple (indice, compteur).','Afficher sur deux lignes les résultats pour (0, 1), puis (9, 1). Sur deux pas, attendu : 0 1 puis -1 3. Sur zéro pas : 0 1 puis -1 1.','Justifier le meilleur cas, le pire cas et la terminaison de la recherche. Ne pas afficher des temps ou confondre le coût de recherche avec les déplacements.'],
+ 'Relier chaque incrément à une comparaison réellement exécutée. Expliquer pourquoi un trajet de n pas produit n + 1 cases à examiner.',
+ ['Fixe d’abord l’unité que tu comptes.','Le compteur augmente même lors de la comparaison qui trouve la cible.','Initialise zéro, incrémente avant le test d’égalité et renvoie le compteur dans les deux issues.'],traceCases(n=>'0 1\n-1 '+(n+1)),
+ '# Outil fourni : collecte des positions, départ inclus.\n# x, y : départ ; dx : 1 vers l’Est, -1 vers l’Ouest.\n'+collectForDebug+'\n# À toi d’écrire chercher_compte(positions, cible).\n# La recherche et le programme principal restent à programmer.\n'),
+ make('a4','Corriger une recherche qui oublie la dernière case','Débogage, borne et tests de recherche',['function','parameter','return','for','if','index','list','sensor'],controlCommands,'trace-courte',
+ 'A2 ; range, dernière case et cas vide.',
+ 'Une recherche peut échouer sans exception si sa borne exclut le dernier indice. Une sortie -1 n’est pas forcément la preuve d’absence. Les cas première/dernière/absente/vide discriminent mieux qu’un exemple central.',
+ 'print(list(range(3 - 1)))',
+ 'Prévoir si la cible finale sera trouvée dans le programme fourni, et ce qui arrive pour le journal de longueur 1.',
+ ['Exécuter le programme erroné, puis corriger la borne sans remplacer la recherche par une fonction intégrée.','Conserver le journal construit à partir du robot. Afficher chercher(positions, positions[-1]) : 2, 4 ou 0 selon le terrain. Vérifier séparément chercher([], (0, 1)) == -1 et deux occurrences identiques.'],
+ 'Identifier l’indice oublié et expliquer pourquoi la fonction doit aussi fonctionner sans données. Distinguer erreur logique et exception Python.',
+ ['Compare les indices examinés à tous les indices valides.','Un tableau de longueur 1 fournit un test minimal utile.','La borne finale de range est exclue ; le retour d’absence reste après le parcours.'],traceCases(n=>String(n)),
+ collectForDebug+'\ndef chercher(positions, cible):\n    for i in range(len(positions) - 1):\n        if positions[i] == cible:\n            return i\n    return -1\npositions = relever_positions(0, 1, 1)\nprint(chercher(positions, positions[-1]))\n'),
+ make('transfert','Rechercher dans un journal issu d’un autre départ','Réutilisation d’une collecte et d’une recherche',['function','parameter','return','list','tuple','sensor'],controlCommands,'trace-courte',
+ 'A1–A3 ; paramètres x, y, dx et lecture du terrain révélé.',
+ 'Changer le cap et l’origine modifie les tuples collectés, pas le contrat de recherche. Plusieurs stratégies de parcours sont admises ; le compte doit toujours représenter les comparaisons effectives. Le journal doit être construit à partir des déplacements, pas recopié.',null,
+ 'Après révélation, prévoir le journal et les résultats pour la case (2, 2) puis la case (9, 2).',
+ ['Révéler le transfert à la demande de l’enseignant. Adapter seulement les paramètres de relever_positions au départ et au cap observés.','Réutiliser chercher_compte et afficher ses résultats pour (2, 2), puis (9, 2), sur deux lignes. Justifier les comptes en déroulant les comparaisons ; ne pas fabriquer le journal attendu.'],
+ 'Montrer la collecte effective, la réutilisation de la fonction et l’argument de coût. Une sortie correcte seule ne démontre pas ces compétences.',
+ ['Sépare l’acquisition du journal et l’algorithme qui le parcourt.','Les coordonnées décroissent vers l’Ouest ; la liste reste dans l’ordre du trajet.','Réutilise les contrats avant de modifier une boucle ou une sortie.'],
+ {'analyse-reserve':{goal:true,actions:3,output:'2 3\n-1 4'}},null,'Transfert')
+ ]
+};
+consolidationCourses.fiabilite.find(a=>a.id==='f3').spec.forbidden=['global'];
+for(const id of ['a2','a4'])consolidationCourses.analyse.find(a=>a.id===id).spec.forbidden=['indexmethod'];
+export const consolidationStatements=Object.fromEntries(Object.entries(consolidationCourses).map(([id,items])=>[id,Object.fromEntries(items.map(a=>[a.id,a.spec]))]));

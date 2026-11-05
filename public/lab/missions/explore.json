@@ -1,0 +1,9 @@
+{
+ "id":"explore","title":"Microduck explore","stages":[
+  {"id":"choix","title":"01 · Observer et décider","objective":"Lire le capteur puis décider d’un unique déplacement, sans collision.","hints":["Décris les deux valeurs possibles du capteur.","Distingue lire le capteur et déplacer le robot.","Une condition if peut autoriser un déplacement lorsque le capteur est faux."],"terrains":[
+   {"id":"libre","name":"Une case libre","width":4,"height":3,"start":[0,1],"goal":[1,1],"heading":1,"obstacles":[[2,1]]},
+   {"id":"bloque","name":"Déjà bloqué","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}]},
+  {"id":"virage","title":"02 · Un trajet à un coude","allowTransfer":true,"objective":"Atteindre le but : avancer si possible, tourner à droite devant l’obstacle. Ces terrains ont un seul coude utile.","hints":["Repère le cap avant et après le coude.","Teste le but avant une nouvelle action ; le capteur aide à choisir cette action.","Dans une boucle, distingue le cas obstacle (rotation) du cas libre (déplacement)."],"terrains":[
+   {"id":"coude","name":"Premier coude","width":5,"height":5,"start":[0,1],"goal":[2,3],"heading":1,"obstacles":[[3,1]]},
+   {"id":"coude-long","name":"Coude plus éloigné","width":6,"height":5,"start":[0,1],"goal":[3,3],"heading":1,"obstacles":[[4,1]]},
+   {"id":"depart-but","name":"But au départ","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}]}]}

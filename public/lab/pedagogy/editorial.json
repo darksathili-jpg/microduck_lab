@@ -1,0 +1,658 @@
+{
+  "format": "microduck-editorial",
+  "version": 1,
+  "sequences": {
+    "traversee": {
+      "s1": {
+        "title": "Atteindre le but avec trois instructions successives",
+        "situation": "",
+        "work": [
+          "Écris trois appels successifs à `duck.avancer()` pour conduire Microduck de `(0, 1)` à l’étoile en `(3, 1)`, vers l’Est. N’utilise aucune boucle. Avant l’essai, annonce sa position après chaque appel, puis compare avec le déplacement observé."
+        ],
+        "prerequisites": "Lire `(x, y)` et le cap Est ; une commande se termine par `()`.",
+        "course": "Python exécute les instructions dans leur ordre. `duck.avancer()` demande une case dans le cap actuel ; une rotation change le cap sans changer de case. Les coordonnées affichées indiquent la dernière case achevée, pas une distance physique.",
+        "prediction": "Depuis `(0, 1)` vers `(3, 1)`, annonce le nombre de commandes et la position après chacune.",
+        "explain": "Pourquoi trois appels sont-ils nécessaires pour rejoindre l’étoile ?",
+        "hints": [
+          "Compte les intervalles entre départ et cible, pas les cases occupées.",
+          "Une commande `avancer` change une seule coordonnée d’une unité dans le cap actuel.",
+          "Écris trois appels `duck.avancer()`, chacun sur sa propre ligne."
+        ],
+        "exampleNotes": "Trois déplacements, sans erreur. Arrivée en `(3, 1)`, vers l’Est.\nAucun affichage avec `print` n’est demandé."
+      },
+      "s2": {
+        "title": "Répéter des déplacements avec une boucle `for`",
+        "situation": "",
+        "work": [
+          "Écris une boucle `for` pour conduire Microduck de `(0, 1)` à l’étoile en `(3, 1)`, vers l’Est. Mémorise le nombre de déplacements dans la variable entière `distance`, puis répète `duck.avancer()` autant de fois. Prévois le nombre de répétitions avant d’exécuter.",
+          "Utilise une affectation et une boucle `for` ; ne recopie pas les appels de déplacement. `duck.avancer()` avance d’une case, sans argument. Aucun affichage avec `print` n’est demandé.",
+          "Prolongement séparé : sur « Transfert · ligne plus longue », l’étoile est en `(6, 1)`. Essaie le code inchangé, puis adapte seulement `distance`. Reviens sur « Départ accessible » pour vérifier le trajet initial."
+        ],
+        "prerequisites": "Savoir appeler `duck.avancer()`, repérer les coordonnées d’une case et indenter un bloc de quatre espaces.",
+        "course": "Dans `for i in range(distance):`, `i` est la variable de boucle. Avec `distance` égal à `3`, elle prend successivement les valeurs `0`, `1`, `2` : trois valeurs, donc trois itérations. À chaque itération, Python exécute le bloc indenté. Ce sont les appels à `duck.avancer()` dans ce bloc qui commandent les pas ; `i` n’est pas une position du robot.\n\n`range(n)` s’arrête avant `n`. Avec `range(0)`, le bloc ne s’exécute pas. Une affectation avec `=` donne sa valeur à `distance` avant la boucle. Indente le bloc de quatre espaces. Une avance sur une case bloquée provoque une erreur.",
+        "prediction": "Quelles cases Microduck doit-il rejoindre après chaque pas ? Prévois aussi le résultat du code inchangé sur la ligne plus longue.",
+        "explain": "Quelles valeurs prend ta variable de boucle ? Combien d’itérations et de déplacements comptes-tu ?",
+        "hints": [
+          "Compte les déplacements entre le départ et l’étoile, plutôt que les cases occupées.",
+          "Affecte ce nombre à `distance` avant la boucle. Le bloc indenté contient l’action à répéter.",
+          "Utilise la forme `for i in range(distance):`, suivie du déplacement indenté. Les valeurs de `i` commencent à `0` ; compte combien il y en a."
+        ],
+        "exampleNotes": "Sur « Départ accessible » : trois déplacements, arrivée en `(3, 1)`, vers l’Est, sans erreur. Aucune sortie à afficher. Le prolongement sur la ligne plus longue demande une autre valeur de `distance` ; il ne remplace pas cet essai."
+      },
+      "s3": {
+        "title": "Corriger une boucle qui fait un pas de trop",
+        "situation": "",
+        "work": [
+          "Corrige la boucle de l’amorce : elle fait avancer Microduck au-delà de l’étoile. Sur « Départ accessible », le départ est en `(0, 1)` et l’étoile en `(3, 1)`, vers l’Est. Prévois le résultat du programme fourni, exécute-le, puis cherche quelle borne changer.",
+          "Charge l’amorce avec « Charger l’amorce… ». Garde une boucle `for` et les déplacements avec `duck.avancer()`, sans argument : un appel avance d’une case. Aucun affichage avec `print` n’est demandé.",
+          "Essai séparé : utilise `range(distance)` sans définir `distance` ; observe `NameError`. Ajoute ensuite l’affectation nécessaire et vérifie le trajet corrigé. Conserve au final un programme sans erreur."
+        ],
+        "prerequisites": "Après S2 : savoir lire une boucle `for` et `range`, reconnaître une affectation et repérer une position sur la grille. L’objectif est ici d’expliquer une erreur de programme, pas d’apprendre une nouvelle commande du robot.",
+        "course": "Avec `range(n)`, pour un entier `n` positif ou nul, le bloc est exécuté `n` fois. La borne d’arrêt est exclue : la dernière valeur parcourue et le nombre de répétitions diffèrent. Pour déboguer, compare ta prévision, les positions observées et le résultat demandé, puis change une cause à la fois.\n\nIci, le quatrième pas reste dans la grille. Dépasser l’étoile donne un résultat incorrect sans exception Python. Utiliser un nom non défini provoque au contraire `NameError` : l’exécution s’interrompt. L’essai avec `distance` sert à comparer ces deux défauts ; il reste séparé du programme corrigé.",
+        "prediction": "Combien de fois le bloc de l’amorce est-il exécuté ? Prévois la colonne finale et compare-la à celle de l’étoile.",
+        "explain": "Pourquoi le pas de trop ne provoque-t-il pas d’exception, alors que le nom `distance` non défini provoque `NameError` ?",
+        "hints": [
+          "Compare la distance à l’étoile au nombre de déplacements réellement observés.",
+          "Compte les valeurs produites par `range(4)` : commencer à `0` enlève-t-il une répétition ?",
+          "La borne commande le nombre de répétitions. Choisis-la d’après le trajet demandé, puis réexécute. Dans l’essai séparé, affecte une valeur à `distance` avant de l’utiliser."
+        ],
+        "exampleNotes": "Programme corrigé : trois déplacements, arrivée en `(3, 1)`, vers l’Est, sans erreur et sans affichage. Compare ce trajet aux quatre déplacements de l’amorce."
+      },
+      "s4": {
+        "title": "S’arrêter avant un obstacle avec une boucle `while`",
+        "situation": "",
+        "work": [
+          "Écris une boucle `while` pour faire avancer Microduck tant que la case devant est libre. Il doit s’arrêter avant l’obstacle ou le bord, sans fixer le nombre de pas. Sur ces quatre couloirs droits, l’étoile indique la dernière case accessible. Garde le même programme pour tous les essais.",
+          "`duck.obstacle_devant()`, sans argument, renvoie `True` devant un obstacle ou le bord, `False` devant une case libre. Cette lecture ne déplace pas le robot. `not` inverse ces booléens.",
+          "`while` répète son bloc tant que sa condition est vraie : teste le capteur avant chaque pas. `duck.avancer()`, sans argument, avance d’une case ; une case bloquée provoque une erreur. Garde le cap initial, sans affichage avec `print`."
+        ],
+        "prerequisites": "Découverte de `while` après les boucles `for` : savoir appeler `duck.avancer()`, reconnaître `True` et `False` et utiliser la négation `not`. Les activités précédentes ont introduit les déplacements et l’indentation.",
+        "course": "Une boucle `while` réévalue sa condition avant chaque passage dans le bloc indenté. Si elle est fausse dès le départ, le bloc ne s’exécute pas. Ici, lire le capteur fournit une observation ; la condition décide si l’on continue ; l’appel de déplacement réalise le pas. Ces opérations ont des rôles différents.\n\nLe capteur vaut `False` lorsque la marche est possible. `not False` vaut `True` et `not True` vaut `False`. Il faut une nouvelle lecture à chaque position : mémoriser une seule observation avant la boucle ne suffit pas. Sur ces lignes finies, chaque avance rapproche du blocage ; une condition mal choisie pourrait empêcher l’arrêt.",
+        "prediction": "Sur « Cas limite · déjà arrivé », prévois la valeur du capteur, sa négation et le nombre de répétitions avant tout essai.",
+        "explain": "Pourquoi la boucle ne fait-elle aucun pas lorsque le capteur renvoie déjà `True` au départ ?",
+        "hints": [
+          "Après un pas, la case située devant peut changer. Quelle information faut-il relire ?",
+          "La boucle doit continuer quand le capteur vaut `False`. Quelle opération transforme cette valeur en condition vraie ?",
+          "Construis la condition avec `not` et `duck.obstacle_devant()`. Place le déplacement dans le bloc indenté de `while`, pour refaire le test avant le pas suivant."
+        ],
+        "exampleNotes": "Même code, sans sortie à afficher ; arrivée à l’étoile, vers l’Est :\n« Obstacle proche » : 2 pas, `(2, 1)`.\n« Obstacle éloigné » : 6 pas, `(6, 1)`.\n« Arrêt au bord » : 4 pas, `(4, 1)`.\n« Cas limite · déjà arrivé » : 0 pas, `(0, 1)`."
+      },
+      "s5": {
+        "title": "Indiquer si la case devant Microduck est libre",
+        "situation": "",
+        "work": [
+          "Sans déplacer Microduck, écris une décision avec `if` et `else` pour annoncer l’état de la case devant. Affiche exactement la chaîne `\"bloque\"` si le capteur renvoie `True`, sinon `\"libre\"`. Prévois le message, puis essaie le même programme sur les deux terrains indiqués.",
+          "`duck.obstacle_devant()`, sans argument, renvoie `True` si la case devant est occupée ou hors de la grille, `False` si elle est libre. Sa lecture ne bouge pas le robot. Utilise `print` pour afficher un seul mot, en minuscules, sans accent ni autre message. Atteindre l’étoile n’est pas demandé."
+        ],
+        "prerequisites": "Après S4 : connaître les deux valeurs booléennes du capteur et savoir afficher une chaîne avec `print`. Cette activité introduit l’alternative `if`/`else`.",
+        "course": "`if` évalue sa condition : si elle est vraie, son bloc est exécuté ; sinon, c’est le bloc de `else`. Les deux en-têtes se terminent par deux-points et sont alignés. Leurs blocs sont indentés. Une seule branche est exécutée pour cette décision.\n\nLe booléen du capteur est une valeur ; le mot entre guillemets est une chaîne choisie pour le message. `print(\"libre\")` affiche le mot sans ses guillemets. Lire le capteur et afficher un message ne commandent aucune action du robot. Le message décrit la case immédiatement devant, pas le trajet entier.",
+        "prediction": "Sur « Cas limite · déjà arrivé », puis « Obstacle proche », prévois le booléen du capteur et le mot correspondant.",
+        "explain": "Sur « Obstacle proche », pourquoi affiche-t-on `\"libre\"` alors qu’un obstacle est visible plus loin ?",
+        "hints": [
+          "Repère uniquement la case immédiatement devant le robot. Est-elle libre ou bloquée ?",
+          "Associe les deux valeurs du capteur aux deux messages. Une seule branche doit afficher un mot.",
+          "Utilise le booléen du capteur dans la condition de `if`. Place un `print` dans chaque bloc indenté ; aligne `else` avec `if`."
+        ],
+        "exampleNotes": "Aucune action : Microduck reste sur sa case, vers l’Est.\n« Cas limite · déjà arrivé » : `bloque`.\n« Obstacle proche » : `libre`."
+      },
+      "s6": {
+        "title": "Définir et appeler `avancer_n(n)`",
+        "situation": "",
+        "work": [
+          "Définis `avancer_n(n)` pour commander `n` déplacements avec une boucle `for`, puis renvoyer l’entier `n`. Le paramètre `n` reçoit le nombre choisi à l’appel. Sur « Départ accessible », appelle la fonction avec l’argument `3` et affiche la valeur renvoyée avec `print`.",
+          "`n` est un entier positif ou nul ; les `n` cases nécessaires doivent être libres. `duck.avancer()`, sans argument, avance d’une case. Place `return` après la boucle et l’appel hors de la définition. La fonction ne fait pas elle-même d’affichage.",
+          "Vérifie aussi les arguments `0` puis `2` dans des exécutions séparées sur « Départ accessible ». À chaque essai, garde un seul appel dans le programme principal : chaque exécution repart de `(0, 1)`."
+        ],
+        "prerequisites": "S2/S3 ; distinguer définir et appeler une fonction.",
+        "course": "`def avancer_n(n):` définit une fonction ; cette définition seule ne déplace pas Microduck. Son corps indenté est exécuté lors d’un appel. `n` est le paramètre de la définition ; dans `avancer_n(3)`, l’argument est la valeur `3`, reçue par `n` pour cet appel. La boucle utilise cette valeur pour déterminer le nombre de répétitions.\n\n`return` transmet une valeur à l’appelant et termine l’appel. Sans retour explicite, le résultat serait `None`. `print` affiche la valeur reçue : il est distinct du retour. Place le retour après les répétitions pour ne pas terminer dès le premier pas. Avec l’argument `0`, la fonction doit renvoyer `0` sans déplacement.",
+        "prediction": "Que fait le robot si le programme contient seulement la définition ? Prévois ensuite les déplacements et l’affichage pour chaque argument : `3`, `0`, `2`.",
+        "explain": "Quelle différence y a-t-il entre définir la fonction, l’appeler avec `2` et afficher la valeur qu’elle renvoie ?",
+        "hints": [
+          "Quel nombre varie d’un appel à l’autre ? Le paramètre permet de réutiliser le même corps de fonction.",
+          "Dans la définition, utilise `n` pour le nombre de répétitions. Le retour vient après la boucle ; l’appel vient après la définition.",
+          "La boucle peut commencer par `for i in range(n):`. Indente le déplacement dans ce bloc. Le programme principal doit afficher le résultat de l’appel, pas le nom de la fonction."
+        ],
+        "exampleNotes": "Sur « Départ accessible », un appel par exécution, vers l’Est :\nArgument `3` : 3 pas, arrivée en `(3, 1)`, sortie `3`.\nArgument `0` : aucun pas, position `(0, 1)`, sortie `0`.\nArgument `2` : 2 pas, position `(2, 1)`, sortie `2`.\nSeul l’essai avec `3` doit atteindre l’étoile."
+      },
+      "transfert": {
+        "title": "Transférer une stratégie de parcours rectiligne",
+        "situation": "",
+        "work": [
+          "Programme Microduck pour atteindre l’étoile sur un terrain rectiligne encore inconnu. Réutilise et justifie une stratégie générale d’arrêt, plutôt qu’un nombre de pas mémorisé. Prépare l’évaluation, puis ouvre le transfert à la demande de l’enseignant. Avant d’exécuter, prévois le trajet à partir du départ et du cap révélés.",
+          "`duck.obstacle_devant()` et `duck.objectif_atteint()`, sans argument, renvoient un booléen sans déplacer le robot ; `duck.avancer()`, sans argument, avance d’une case et provoque une erreur si elle est bloquée. Plusieurs constructions Python sont admises. Explique pourquoi ta condition d’arrêt convient au terrain révélé.",
+          "À la demande de l’enseignant, révéler le transfert. Lire le départ et le cap, puis prévoir le résultat avant d’exécuter.",
+          "Choisir et justifier une stratégie générale d’arrêt. Plusieurs constructions sont admises ; l’arrivée seule ne démontre ni généralisation ni autonomie."
+        ],
+        "prerequisites": "S4 ; prévoir sans exécuter et justifier une généralisation.",
+        "course": "Un transfert utilise une situation non montrée pendant l’entraînement. On distingue une stratégie générale d’une adaptation à un trajet mémorisé. Il faut annoncer les hypothèses : départ orienté, obstacle ou bord devant le but, chemin en ligne droite.",
+        "prediction": "Avant le premier essai sur le terrain révélé, annonce capteur initial, nombre de pas et position finale. Explique ce qui reste valable malgré le changement.",
+        "explain": "Pourquoi la solution dépend-elle de l’observation et non du nombre de cases ou d’un cap Est supposé ? Que changerait une cible avant le mur plutôt que juste devant ?",
+        "hints": [
+          "Vérifie les hypothèses de ta stratégie, pas seulement la longueur.",
+          "Distingue le cap courant et le déplacement relatif devant soi.",
+          "Reprends ta condition d’arrêt en mots ; l’enseignant décide de l’aide syntaxique en évaluation."
+        ],
+        "exampleNotes": "Atteindre l’étoile sans collision. Détermine toi-même le nombre de déplacements et la position finale sur le terrain révélé ; aucun affichage Python particulier n’est exigé. Compare ensuite ta prévision au comportement réellement produit."
+      }
+    },
+    "explore": {
+      "e1": {
+        "title": "Mémoriser si Microduck peut avancer",
+        "situation": "",
+        "work": [
+          "Mémorise dans une variable le booléen renvoyé par `duck.obstacle_devant()`. Affiche la valeur mémorisée sur une première ligne, puis sa négation avec `not` sur une seconde. Tu choisis le nom de la variable. Ne déplace pas Microduck : tu observes la case devant lui.",
+          "Le capteur, sans argument, renvoie `True` devant une case occupée ou le bord, `False` devant une case libre. Utilise une affectation avec `=` pour conserver cette valeur. `not` calcule le booléen opposé sans modifier la variable. Affiche seulement les valeurs avec `print`, sans libellé."
+        ],
+        "prerequisites": "Réinvestissement de S4/S5 : savoir affecter une valeur à une variable, lire un booléen et utiliser `print`. Le cours propose un exemple guidé ; commence par ta prévision avant de l’ouvrir.",
+        "course": "Une affectation comme `mesure = valeur` associe une valeur au nom `mesure`. Ici, le membre droit doit être la lecture du capteur : la donnée mémorisée est un booléen, pas une distance. Réutilise le nom choisi pour afficher cette donnée.\n\nLa négation calcule une autre valeur : `not True` vaut `False`, et `not False` vaut `True`. Elle ne réaffecte pas la variable. Lire le capteur, mémoriser, afficher et calculer la négation ne commandent aucun déplacement. L’exemple exécutable ci-dessous est une aide guidée ; commence par ta prévision avant de l’ouvrir.",
+        "prediction": "Avant d’exécuter, écris les deux lignes attendues sur « Une case libre », puis sur « Déjà bloqué ». Quelle phrase correspond à chaque valeur ?",
+        "explain": "Après l’affichage de sa négation, la variable contient-elle encore la valeur observée au départ ? Pourquoi ?",
+        "hints": [
+          "La donnée à mémoriser répond à la question « un obstacle est-il devant ? ». Elle vaut un booléen.",
+          "Affecte la lecture du capteur à un nom, puis réutilise ce nom. Inutile de déplacer le robot pour obtenir la seconde valeur.",
+          "Utilise deux appels à `print` : le premier reçoit ta variable, le second une expression composée de `not` suivi du même nom."
+        ],
+        "exampleNotes": "Même code sur les deux terrains, aucune action ; Microduck reste sur sa case, vers l’Est. L’arrivée à l’étoile n’est pas demandée.\n« Une case libre » :\n```text\nFalse\nTrue\n```\n« Déjà bloqué » :\n```text\nTrue\nFalse\n```"
+      },
+      "e2": {
+        "title": "Autoriser un déplacement avec `if`",
+        "situation": "",
+        "work": [
+          "Avec `if`, autorise un seul appel à `duck.avancer()` si la case devant est libre. `duck.obstacle_devant()` renvoie le booléen `True` devant un obstacle ou le bord, `False` devant une case libre ; sa lecture ne déplace pas le robot. La condition de déplacement doit être vraie seulement dans le cas libre : si elle est fausse, aucune action. Teste le même code sur les deux terrains, sans mémoriser un nombre de pas.",
+          "Avec `if`, autoriser un unique pas seulement si la case devant est libre. Sinon ne rien déplacer.",
+          "Tester libre (un pas) et bloque (zéro pas) avec le même code. Ne pas remplacer le test par un nombre de pas mémorisé."
+        ],
+        "prerequisites": "E1 ; `if` et indentation.",
+        "course": "Une condition `if` choisit si son bloc est exécuté une fois. Une boucle répéterait le test. Pour autoriser un pas, il faut un chemin libre, donc une observation fausse. La négation rend cette condition lisible.",
+        "prediction": "Annonce zéro ou un pas sur chacun des deux terrains, puis la position finale.",
+        "explain": "Explique pourquoi `if` suffit ici et pourquoi avancer avant de tester provoquerait une collision sur bloqué.",
+        "hints": [
+          "Que doit-il se passer dans chacune des deux situations ?",
+          "La valeur qui autorise un pas est la négation du capteur.",
+          "Place l’appel `avancer` dans un bloc `if not duck.obstacle_devant():`."
+        ],
+        "exampleNotes": "Même code sur les deux terrains, sans collision ni rotation.\n« Une case libre » : un déplacement, arrivée en (1, 1), vers l’Est.\n« Déjà bloqué » : aucune action, position (0, 1), vers l’Est.\nAucun affichage n’est demandé."
+      },
+      "e3": {
+        "title": "Répéter une décision avec `while` et `if`/`else`",
+        "situation": "",
+        "work": [
+          "Corrige le programme fourni : avec `while`, répète une décision tant que `duck.objectif_atteint()` renvoie `False`, puis arrête toute action. À chaque itération, `if` choisit la rotation à droite avec `duck.tourner_droite()` lorsque `duck.obstacle_devant()` renvoie `True` ; `else` choisit `duck.avancer()` sur une case libre. Les capteurs renvoient des booléens sans déplacer le robot. Teste le même code sur les deux coudes et sur « But au départ » : dans ce dernier cas, aucune action. Cette règle convient aux trajets proposés, pas à tous les labyrinthes.",
+          "Corriger le programme fourni : tant que le but n’est pas atteint, choisir entre tourner à droite devant un obstacle et avancer dans une case libre.",
+          "Utiliser `while` et `if`/`else` ; tester les deux coudes et le but au départ avec le même code. Cette règle n’est garantie que pour ces trajets à un coude, pas pour tout labyrinthe."
+        ],
+        "prerequisites": "E2 ; `while` et `duck.objectif_atteint()`.",
+        "course": "Une boucle peut répéter une décision. Sur ces trajets à un coude, avancer si libre et tourner à droite devant l’obstacle suffit pour rejoindre le but. Cette règle n’est pas une solution universelle de labyrinthe : d’autres cartes peuvent la faire boucler.",
+        "prediction": "Prévois la première collision du programme proposé ; décris le cap après une rotation à droite.",
+        "explain": "Justifie la décision et l’arrêt sur ces terrains. Donne un exemple de situation où cette règle locale serait insuffisante.",
+        "hints": [
+          "Où l’observation doit-elle être faite pour rester utile après un pas ?",
+          "Avant chaque nouvelle action, teste le but ; le capteur choisit ensuite entre deux actions.",
+          "Dans `while` `not` `duck.objectif_atteint()`, utilise `if` `duck.obstacle_devant()` pour tourner à droite, `else` pour avancer."
+        ],
+        "exampleNotes": "Même code sur les trois terrains, sans collision.\n« Premier coude » : quatre déplacements et une rotation à droite ; arrivée en (2, 3), vers le Sud.\n« Coude plus éloigné » : cinq déplacements et une rotation à droite ; arrivée en (3, 3), vers le Sud.\n« But au départ » : aucune action, position (0, 1), vers l’Est.\nAucun affichage n’est demandé."
+      },
+      "e4": {
+        "title": "Compter les déplacements d’un trajet avec une fonction",
+        "situation": "Après avoir guidé Microduck dans un coude à l’activité précédente, tu vas reprendre cette stratégie dans une fonction et obtenir le nombre de cases parcourues. Une rotation change la direction, mais ne compte pas comme un déplacement d’une case.\n\nLa fonction à écrire s’appelle `explorer()`. Elle ne reçoit aucun paramètre et renvoie un entier positif ou nul : le nombre de déplacements effectués pendant son appel. Elle commande réellement le robot.\n\nLes quatre méthodes utiles ne prennent aucun argument. `duck.objectif_atteint()` renvoie `True` sur l’étoile, `False` ailleurs. `duck.obstacle_devant()` renvoie `True` devant un obstacle ou le bord, `False` devant une case libre ; ces deux lectures ne déplacent pas le robot. `duck.avancer()` avance d’une case et provoque une erreur si celle-ci est bloquée. `duck.tourner_droite()` tourne de 90° sans changer de case.",
+        "work": [
+          "Définis `explorer()`, sans paramètre : elle guide Microduck jusqu’au but en reprenant la décision de l’activité précédente et renvoie un entier positif ou nul, le nombre de déplacements effectués pendant cet appel. Compte seulement les changements de case réussis, jamais les rotations ni une tentative impossible ; une avance bloquée provoque une erreur. Utilise `while`, `if`/`else` et le capteur d’obstacle. La fonction renvoie le compte avec `return` ; après sa définition, appelle-la une seule fois et affiche la valeur renvoyée avec `print`. Si le but est au départ, elle renvoie `0` sans action.",
+          "Prévois le nombre de déplacements et le nombre de rotations sur « Premier coude ». Que doit renvoyer la fonction si Microduck se trouve déjà sur l’étoile ?",
+          "Écris `explorer()` en reprenant la décision de E3 : tant que le but n’est pas atteint, tourner à droite devant un obstacle, sinon avancer. Utilise `while`, `if`/`else` et le capteur d’obstacle. Un compteur doit compter seulement les déplacements acceptés, pas les rotations. Cette stratégie est adaptée aux terrains proposés, pas à tous les labyrinthes.",
+          "Renvoie le compteur avec `return` une fois le but atteint. Après la définition, appelle `explorer()` une seule fois et affiche l’entier renvoyé avec `print`, sans message supplémentaire.",
+          "Exécute le même programme sur les trois terrains :\n• « Premier coude » : 4 déplacements, une rotation, fin en `(2, 3)`, vers le Sud ; affichage 4.\n• « Coude plus éloigné » : 5 déplacements, une rotation, fin en `(3, 3)`, vers le Sud ; affichage 5.\n• « But au départ » : aucune action, position `(0, 1)`, vers l’Est ; affichage 0.",
+          "Explique où le compteur est augmenté et pourquoi sa valeur peut différer du nombre total d’actions de la trace."
+        ],
+        "prerequisites": "Synthèse après E3 : connaître `while`, `if`/`else` et les commandes du robot. Les fonctions ont été introduites dans la traversée ; un compteur entier et `return` sont rappelés dans le cours.",
+        "course": "Un compteur mémorise une quantité qui évolue : `compte = compte + 1`, ou `compte += 1`, augmente sa valeur de un. En revanche, calculer `compte + 1` dans `print` ne modifie pas `compte`. La fonction rassemble le trajet et son calcul. `return` transmet un résultat au programme appelant ; il ne l’affiche pas. Le compteur est initialisé pour chaque appel et augmenté après un déplacement accepté. Si le but est atteint dès le départ, la boucle ne s’exécute pas mais la fonction doit tout de même renvoyer zéro.",
+        "prediction": "Sur le premier coude, distingue les changements de case et de direction. Combien le compteur doit-il valoir après la rotation ?",
+        "explain": "Montre la définition, l’appel et le retour de la fonction. Explique pourquoi compter aussi les rotations donnerait un résultat incorrect. Les trois terrains suffisent-ils à prouver la correction de cette stratégie sur n’importe quelle carte ?",
+        "hints": [
+          "Repère dans la décision de E3 la seule commande qui change la case du robot.",
+          "Le compteur commence à zéro pour l’appel. Il ne doit augmenter que dans la branche qui avance.",
+          "Place le retour après la boucle, pas après le premier pas. L’affichage utilise ensuite la valeur renvoyée par l’appel de la fonction."
+        ],
+        "exampleNotes": "Même code sur les trois terrains, sans collision. Affiche seulement l’entier renvoyé, sans libellé.\n« Premier coude » : quatre déplacements, une rotation à droite ; arrivée en (2, 3), vers le Sud ; affichage `4`.\n« Coude plus éloigné » : cinq déplacements, une rotation à droite ; arrivée en (3, 3), vers le Sud ; affichage `5`.\n« But au départ » : aucune action, position (0, 1), vers l’Est ; affichage `0`.\n\nPour un compteur initialisé à zéro, `compte + 1` vaut `1` mais `compte` vaut encore `0` tant qu’aucune affectation n’a modifié la variable."
+      },
+      "transfert": {
+        "title": "Guider Microduck depuis un autre départ et compter ses déplacements",
+        "situation": "Ta fonction `explorer()` guide déjà Microduck jusqu’à l’étoile. Tu vas vérifier qu’elle fonctionne aussi depuis un autre départ. Elle ne reçoit aucun paramètre et renvoie un entier : le nombre de déplacements effectués. Une rotation ne compte pas comme un déplacement.",
+        "work": [
+          "Réutilise ta fonction `explorer()`, sans paramètre, sur un terrain encore inconnu. Elle guide Microduck jusqu’à l’étoile et renvoie un entier : le nombre de déplacements effectués, sans compter les rotations. Appelle-la une seule fois et affiche uniquement la valeur renvoyée avec `print`, dans le programme principal.",
+          "La définition de `explorer()` doit être présente dans le code courant ; elle ne fait pas d’affichage. Si elle manque, retrouve ton brouillon de « Compter les déplacements d’un trajet avec une fonction », puis travaille sur une copie. Prépare l’évaluation et ouvre le transfert à la demande de l’enseignant ; prévois le trajet avant l’essai. Les commandes et leurs effets figurent dans la fiche complète.",
+          "Programmation — Réutilise `explorer()` dans ton programme, puis appelle-la une seule fois et affiche son résultat avec `print`. Sa définition doit être présente dans le code courant ; la fonction renvoie le compte sans l’afficher elle-même.",
+          "Vérification — Prépare l’évaluation puis, à la demande de l’enseignant, utilise « Commencer le transfert » en bas de page. Observe le départ et le cap du nouveau terrain, prévois le trajet, puis exécute ton programme.",
+          "Résultat attendu — Microduck effectue quatre déplacements et une rotation à droite ; il termine en `(2, 1)`, vers le Nord. La console affiche uniquement 4. Explique pourquoi la rotation n’augmente pas le compte.",
+          "Préparation du code, si nécessaire — Pour retrouver ta fonction, consulte la rubrique « Préparation du code » dans « A · Comprendre la notion »."
+        ],
+        "prerequisites": "Après « Compter les déplacements d’un trajet avec une fonction » : fonctions sans paramètre, `return`, compteur entier, capteur d’obstacle et stratégie de parcours d’un coude.",
+        "course": "Préparation du code — si la définition manque\nRetrouve l’activité « Compter les déplacements d’un trajet avec une fonction ». Dans « Mon code : brouillons et récupération », ouvre ton brouillon. Reviens à cet exercice, puis choisis « Utiliser ce code pour cet exercice » pour travailler sur une copie. Garde la définition de `explorer()` et retire l’ancien appel principal avant d’écrire le nouvel appel. Changer d’exercice et préparer le terrain conservent le code ; une exécution passée ne fournit pas automatiquement la fonction.\n\nRappel Python\n`return` transmet le compte à l’appelant ; `print` l’affiche. Seule une avance acceptée augmente le compteur. « Devant » et « à droite » dépendent du cap courant. La stratégie d’Explore convient à ce coude, pas à tous les labyrinthes.",
+        "prediction": "Sur le terrain révélé, indique les positions après chaque déplacement et le cap après la rotation. Combien de déplacements la fonction doit-elle renvoyer ?",
+        "explain": "Explique pourquoi la règle de décision convient à ce nouveau départ, où le compteur est augmenté et pourquoi quatre déplacements peuvent correspondre à cinq actions. Donne oralement une limite de cette stratégie.",
+        "hints": [
+          "Observe le cap initial avant de tracer la première flèche de déplacement.",
+          "Tourner à droite change le cap sans changer la case ; le compteur des déplacements reste alors inchangé.",
+          "Reprends ta fonction et son compteur ; change seulement l’appel principal si nécessaire. Une liste de pas recopiés ne montre pas la réutilisation demandée."
+        ],
+        "exampleNotes": "Atteindre l’étoile sans collision et afficher uniquement le nombre entier de déplacements sur le terrain révélé. Calcule ce nombre et le cap final avant l’essai. Une rotation change le cap, pas la case, et ne compte pas comme un déplacement.\n\nCommandes de la fonction : `duck.objectif_atteint()` renvoie `True` sur l’étoile, `False` ailleurs ; `duck.obstacle_devant()` renvoie `True` si la case immédiatement devant est occupée ou hors de la grille, `False` sinon. Ces lectures ne déplacent pas le robot. `duck.avancer()` avance d’une case et provoque une erreur si elle est bloquée. `duck.tourner_droite()` tourne de 90° sur place. Toutes ces méthodes sont sans argument."
+      }
+    },
+    "memorise": {
+      "m1": {
+        "title": "Lire deux éléments d’une liste par leurs indices",
+        "situation": "Microduck pourra utiliser des lettres pour représenter des commandes : A pour avancer, D pour tourner à droite, G pour tourner à gauche. Ici, vous allez seulement lire ces lettres : le robot ne doit effectuer aucune action. La liste contient, dans cet ordre, les chaînes de caractères `\"A\", \"D\", \"A\"`. Les indices commencent à `0`. Pour lire l’élément d’indice `i` d’une liste, on écrit `liste[i]`.",
+        "work": [
+          "Crée `commandes = [\"A\", \"D\", \"A\"]`, une liste de trois chaînes de caractères représentant des lettres de commande.\n\nLes indices commencent à `0` : l’indice `0` désigne le premier élément et `2` le troisième. Lis ces deux éléments par leurs indices et affiche-les avec `print` sur une seule ligne, séparés par un espace.\n\nLe robot ne doit effectuer aucune action ; ne remplace pas les lectures par un texte recopié.",
+          "Avant d’exécuter, associer un indice à chacun des trois éléments. Prévoir les valeurs lues aux indices `0` et `2`. Créer la liste Python nommée `commandes` contenant, dans cet ordre, les chaînes `\"A\", \"D\", \"A\"`.",
+          "Afficher sur une seule ligne, séparés par un espace, les éléments d’indices `0` et `2`. Le résultat attendu est A A.",
+          "Expliquer pourquoi la liste a trois éléments mais ne possède pas d’élément d’indice `3`. Utiliser les accès aux indices `0` et `2` pour produire l’affichage ; ne pas écrire seulement `print(\"A A\")`. N’appeler aucune commande du robot. Une boucle et des conditions ne sont pas nécessaires."
+        ],
+        "prerequisites": "Savoir affecter une chaîne à une variable et l’afficher avec `print`. Les listes, leurs indices et la fonction `len` sont introduits ici.",
+        "course": "Une liste Python conserve des éléments ordonnés. La fonction `len(liste)` renvoie le nombre d’éléments. Pour une liste non vide, les indices non négatifs vont de `0` à `len(liste) - 1`. La liste peut contenir les codes de commandes du robot : A avancer, D droite, G gauche. Lire la liste n’exécute pas ces commandes.",
+        "prediction": "Prévoir les éléments lus aux indices `0` et `2`, puis expliquer la différence entre la longueur de la liste et son dernier indice.",
+        "explain": "Distingue la longueur, les indices et les commandes réelles. Où apparaît une erreur `IndexError` ?",
+        "hints": [
+          "Numérote les éléments avant de programmer.",
+          "Trois éléments portent les indices `0`, `1` et `2`.",
+          "Utilise deux accès indexés dans `print` ; le dernier indice est `len(commandes)` − `1`."
+        ],
+        "exampleNotes": "Sur « Itinéraire A, D, A », affiche une seule ligne : `A A`. Microduck ne se déplace pas et ne tourne pas.\n\nExemple indépendant : si `lettres = [\"G\", \"D\"]`, alors `lettres[1]` vaut `\"D\"`. Un accès à l’indice `3` de `commandes` provoquerait `IndexError` : essayer ce cas séparément, puis le retirer du programme de contrôle."
+      },
+      "m2": {
+        "title": "Interpréter une liste de commandes avec `for`",
+        "situation": "Microduck part de `(0, 1)`, orienté vers l’Est. Votre programme doit interpréter une liste de commandes pour atteindre `(1, 2)`. A signifie avancer d’une case ; D signifie tourner de 90° à droite ; G signifie tourner de 90° à gauche. Une rotation compte comme une commande traitée, mais pas comme un déplacement de case.",
+        "work": [
+          "Pars de `(0, 1)`, cap Est, avec `commandes = [\"A\", \"D\", \"A\"]`, une liste de chaînes à traiter dans cet ordre.\n\n`\"A\"` : avancer d’une case ; `\"D\"` : tourner de 90° à droite ; `\"G\"` : tourner de 90° à gauche, sans changer de case.\n\nAvec une boucle bornée `for` et des conditions, interprète les éléments directement ou par leurs indices. Affiche ensuite avec `print` le nombre de commandes traitées : une rotation compte aussi comme une commande. Ne change pas la liste du contrôle obligatoire.",
+          "Avant d’exécuter, prévoir la position et l’orientation après chaque commande. Parcourir cette liste avec `for`, directement ou par indices. Utiliser des conditions pour appeler `duck.avancer()` pour A, `duck.tourner_droite()` pour D et `duck.tourner_gauche()` pour G. Ces méthodes ne prennent aucun argument.",
+          "À la fin du parcours, afficher le nombre de commandes traitées : 3. Un compteur ou `len(commandes)` sont autorisés. Pour le contrôle obligatoire, conserver la liste initiale : trois actions, arrivée en `(1, 2)`, orientation Sud et affichage 3 sont attendus.",
+          "Essai séparé de G : repartir du départ et utiliser temporairement `[\"A\", \"G\", \"A\"]`. Prévoir puis observer l’arrivée en `(1, 0)`, orientation Nord, avec trois actions et l’affichage 3. Ce trajet libre n’atteint pas le but initial et ne constitue pas une réussite du contrôle obligatoire. Restaurer ensuite `[\"A\", \"D\", \"A\"]` pour ce contrôle."
+        ],
+        "prerequisites": "Avoir travaillé « Lire deux éléments d’une liste par leurs indices », une boucle `for` et une alternative `if`/`else`. Les comparaisons de chaînes avec `==`, l’emploi de `elif` et les rotations sont introduits ici.",
+        "course": "Dans un parcours direct, `for commande in commandes:` donne successivement les éléments à `commande`. Dans un parcours par indices, `for i in range(len(commandes)):` donne des indices à `i` ; l’élément se lit avec `commandes[i]`. Ces en-têtes sont à compléter par un bloc indenté. Pour choisir une action, `==` compare deux valeurs ; `=` réalise une affectation. Après un `if`, `elif` teste une autre condition seulement si les conditions précédentes étaient fausses. On peut choisir une action selon la valeur lue. Le robot n’interprète pas automatiquement la liste : c’est ton programme qui associe A, D et G aux commandes existantes.",
+        "prediction": "Sur A, D, A, prévoir la position et l’orientation après chacune des trois commandes. Combien y a-t-il de déplacements de case et de rotations ?",
+        "explain": "Explique le lien entre élément Python et action. Compare parcours direct et parcours par indices sans prétendre que la liste pilote seule le robot.",
+        "hints": [
+          "Déroule une commande à la fois sur la grille.",
+          "Une boucle lit les éléments ; une condition choisit le bon appel Duck.",
+          "Pour chaque commande, teste A, D ou G puis appelle `avancer`, `tourner_droite` ou `tourner_gauche`. Compte les commandes exécutées."
+        ],
+        "exampleNotes": "Contrôle obligatoire avec `[\"A\", \"D\", \"A\"]` : deux déplacements et une rotation, soit trois actions ; arrivée en `(1, 2)`, cap Sud ; sortie `3`.\n\nEssai séparé avec `[\"A\", \"G\", \"A\"]` : arrivée en `(1, 0)`, cap Nord ; sortie `3`. Cet essai ne remplace pas le contrôle obligatoire.\n\nSeule la liste A, D, A sert au contrôle obligatoire. La branche G est étudiée séparément avec l’enseignant. Les méthodes du robot ne renvoient pas le nombre de commandes traitées. Un déplacement vers un obstacle ou hors du terrain provoque une erreur ; les rotations ne changent pas de case."
+      },
+      "m3": {
+        "title": "Conserver les observations de Microduck dans une liste",
+        "situation": "Microduck avance dans un couloir jusqu’à ce qu’un obstacle l’empêche de continuer. Pour étudier ensuite ce trajet, tu vas réunir ses observations dans une liste, puis renvoyer cette liste depuis une fonction. Cette activité réutilise les fonctions, les listes et la boucle `while`.\n\nLa méthode `duck.obstacle_devant()`, sans argument, renvoie `True` si la case immédiatement devant est occupée ou hors de la grille, et `False` si elle est libre. Elle ne déplace pas le robot. La commande `duck.avancer()`, sans argument, avance d’une case ; un appel face à un obstacle provoque une erreur.\n\nLa liste doit contenir les booléens observés avant chaque déplacement, dans l’ordre, puis le `True` du blocage final. Ce sont des observations de la case devant Microduck, pas les coordonnées des cases visitées. Même sans déplacement possible, il y a une observation à conserver. Pour ajouter une valeur à la fin d’une liste, on écrit `nom_de_la_liste.append(valeur)`.",
+        "work": [
+          "Programme la fonction `relever()`, sans paramètre. Elle renvoie une liste de booléens lus avec `duck.obstacle_devant()` : `False` si la case devant est libre, `True` si elle est bloquée ou hors de la grille.\n\nConserve dans l’ordre l’observation avant chaque déplacement, puis celle du blocage final, même si aucun déplacement n’est possible. Avance seulement lorsque la case devant est libre ; utilise `while` et `append`. Ne recopie pas les résultats.\n\nRenvoie la liste avec `return`, sans l’afficher dans la fonction. Appelle ensuite `relever()` une seule fois et affiche la liste renvoyée avec `print`.",
+          "Avant d’exécuter, prévois la liste obtenue pour deux déplacements, puis lorsque Microduck est bloqué dès le départ. Écris une fonction nommée `relever()`, sans paramètre. Elle doit construire une liste à partir des lectures du capteur, avancer tant que la case devant est libre et conserver aussi l’observation du blocage final. Utilise une boucle `while` et la méthode `append` pour ajouter les observations à la fin de la liste.",
+          "À la fin de la fonction, renvoie la liste avec `return` ; ne l’affiche pas dans la fonction. Après sa définition, appelle `relever()` une seule fois et affiche la liste renvoyée. Ne recopie pas une liste de résultats à la place des lectures du capteur.",
+          "Exécute le même programme sur les trois terrains :\n• « Deux déplacements » : [`False`, `False`, `True`].\n• « Quatre déplacements » : [`False`, `False`, `False`, `False`, `True`].\n• « Observation sans déplacement » : [`True`].\nLa console affiche uniquement la liste demandée. Microduck effectue respectivement 2, 4 et 0 déplacements et s’arrête avant l’obstacle.",
+          "Explique pourquoi la liste contient un élément de plus que le nombre de déplacements, y compris lorsque le robot ne bouge pas."
+        ],
+        "prerequisites": "Savoir lire et parcourir une liste, utiliser `while` avec le capteur, définir et appeler une fonction et distinguer `return` de `print`. Ces notions sont réinvesties ; `append` est introduit ici.",
+        "course": "Une liste garde l’ordre de ses éléments. La méthode `append` ajoute une valeur à la fin ; elle ne remplace pas la liste. Cet appel modifie la liste et renvoie `None`, pas la liste modifiée. Chaque `False` enregistré autorise ici un déplacement. Le dernier `True` signale l’arrêt et doit aussi être conservé. Une définition de fonction ne l’exécute pas : il faut un appel. `return` transmet la liste à l’instruction qui a appelé la fonction ; `print` affiche ensuite cette liste. La fonction `relever` ne reçoit aucun argument, car elle utilise le robot dans l’état initial du terrain.",
+        "prediction": "Pour deux déplacements, combien de `False` faut-il conserver et quelle est la dernière valeur ? Sans déplacement, faut-il renvoyer `[]` ou une liste contenant une observation ? Justifie ta prévision.",
+        "explain": "Suis les lectures et les déplacements dans leur ordre. Où le blocage final est-il enregistré ? Explique la différence entre renvoyer la liste, l’afficher et commander le robot. Montre que les valeurs viennent des lectures et non d’une liste écrite à l’avance.",
+        "hints": [
+          "Écris sur papier la succession « observer, décider, avancer ». Que faut-il encore enregistrer quand la décision devient « s’arrêter » ?",
+          "La liste doit exister avant les déplacements. Le cas sans déplacement doit malgré tout conserver la première observation.",
+          "Ajoute les lectures libres à la liste pendant le parcours et conserve aussi la lecture `True` qui arrête la boucle. Renvoyer la liste vient après cette dernière observation."
+        ],
+        "exampleNotes": "Même programme sur les trois terrains :\n« Deux déplacements » : `[False, False, True]`.\n« Quatre déplacements » : `[False, False, False, False, True]`.\n« Observation sans déplacement » : `[True]`.\nMicroduck effectue respectivement deux, quatre et zéro déplacements ; le dernier `True` est toujours conservé. La console affiche uniquement la liste renvoyée.\n\nExemple indépendant de construction, hors trajet :\nExemple de construction d’une liste : `valeurs = []` crée une liste vide ; `valeurs.append(False)` puis `valeurs.append(True)` produisent `[False, True]`. Cet exemple ne commande pas le robot. Le programme de l’exercice doit obtenir ses valeurs du capteur."
+      },
+      "m4": {
+        "title": "Corriger une boucle qui lit un indice hors de la liste",
+        "situation": "On veut lire les trois lettres de commandes, puis les utiliser pour guider Microduck. Le programme de départ essaie de lire un élément qui n’existe pas : il provoque `IndexError`. Tu vas corriger ce parcours, puis reprendre le pilotage de « Interpréter une liste de commandes avec `for` ».",
+        "work": [
+          "Travaille avec `commandes = [\"A\", \"D\", \"A\"]`, une liste de chaînes : `\"A\"` fait avancer d’une case, `\"D\"` tourner à droite et `\"G\"` tourner à gauche de 90°, sur place.\n\nPhase 1 — Charge ou recopie le programme fautif fourni. Prévois ses lectures, exécute-le et identifie l’accès qui provoque `IndexError`. Corrige la borne du parcours par indices pour lire les trois lettres sans erreur et sans déplacer le robot.\n\nPhase 2 — Depuis `(0, 1)`, cap Est, utilise le parcours corrigé avec `for`, `commandes[i]` et des conditions pour piloter Microduck. Remplace l’affichage des lettres par celui du nombre de commandes traitées, une seule fois après la boucle.",
+          "Diagnostic — Prévois les indices utilisés par ce programme, puis recopie-le et exécute-le :\n```text\ncommandes = [\"A\", \"D\", \"A\"]\nfor i in range(len(commandes) + 1):\n    print(commandes[i])\n```\nQuel accès provoque `IndexError` ? Corrige la borne pour lire les trois lettres, sans erreur.",
+          "Programmation — Dans le parcours corrigé, lis `commandes[i]` et exécute la commande correspondante : A appelle `duck.avancer()`, D `duck.tourner_droite()`, G `duck.tourner_gauche()`. Ces méthodes sont sans argument : une avance change de case ; une rotation tourne de 90° sur place. Une avance bloquée provoque une erreur. Utilise une liste et une boucle `for` par indices.",
+          "Vérification — Sur « Itinéraire A, D, A », garde la liste initiale. Remplace l’affichage des lettres par un seul affichage du nombre de commandes traitées, après la boucle : 3. On attend trois actions, sans erreur, et l’arrivée en `(1, 2)`, vers le Sud. Explique la borne corrigée."
+        ],
+        "prerequisites": "Après « Lire deux éléments d’une liste par leurs indices » et « Interpréter une liste de commandes avec `for` » : liste, indices depuis zéro, `range`, boucle `for` et conditions pour choisir une commande.",
+        "course": "Préparation du code — si nécessaire\nLa préparation du terrain conserve ton programme. Le court programme à diagnostiquer est reproduit dans la consigne : conserve ton travail avant de le recopier. Il est aussi disponible dans « Mon code : brouillons et récupération », bouton « Remplacer par l’amorce de cet exercice ». Ce remplacement est volontaire et confirmé.\n\nRappel Python\nPour une liste de longueur `n`, les indices non négatifs vont de `0` à `n` − `1` ; la borne finale de `range` est exclue. Un parcours direct peut exécuter correctement les commandes, mais cet exercice demande précisément de lire `commandes[i]`. L’essai initial affiche seulement des lettres et ne déplace pas le robot ; la seconde étape transforme ces lettres en actions.",
+        "prediction": "Avant l’essai, écris les indices produits par la boucle et les trois valeurs effectivement lues. À quel moment l’erreur survient-elle ?",
+        "explain": "Explique pourquoi longueur et dernier indice diffèrent. Montre l’accès indexé qui fournit chaque commande au pilotage ; distingue affichage d’une lettre et appel d’une méthode du robot.",
+        "hints": [
+          "Écris les indices à côté des trois éléments de la liste.",
+          "Compare le dernier indice valide avec la dernière valeur produite par la boucle.",
+          "La borne finale de `range` est exclue. Après correction, garde la lecture `commandes[i]` et reprends les conditions du précédent interpréteur."
+        ],
+        "exampleNotes": "Phase 1 — L’amorce affiche les trois lettres, puis provoque `IndexError`, sans action du robot. Après correction, la lecture seule doit afficher, sans erreur :\n```text\nA\nD\nA\n```\nCe résultat de lecture ne suffit pas au contrôle final de l’activité.\n\nPhase 2 — Sur « Itinéraire A, D, A » : deux déplacements et une rotation, soit trois actions ; arrivée en `(1, 2)`, cap Sud ; un seul affichage final : `3`.\n\nPour `lettres = [\"G\", \"D\"]`, les indices non négatifs sont `0` et `1` ; `lettres[2]` provoque `IndexError`. L’erreur d’indice n’est pas une collision du robot."
+      },
+      "transfert": {
+        "title": "Enregistrer les observations de Microduck sur un nouveau trajet",
+        "situation": "Microduck doit conserver les observations d’un nouveau trajet horizontal pour pouvoir les relire ensuite. Tu vas réutiliser `relever()`, la fonction écrite dans « Conserver les observations de Microduck dans une liste » : sans paramètre, elle avance jusqu’au blocage et renvoie une liste de booléens, dans l’ordre des observations, blocage final inclus. Elle ne fait pas d’affichage.\n\n`duck.obstacle_devant()`, sans argument, renvoie `True` si la case immédiatement devant est occupée ou hors de la grille, sinon `False`. Cette lecture ne déplace pas le robot. `duck.avancer()`, sans argument, avance d’une case ; une case bloquée provoque une erreur.",
+        "work": [
+          "Réutilise `relever()`, sans paramètre, pour parcourir un trajet encore inconnu jusqu’au blocage. Elle renvoie une liste de booléens dans l’ordre des observations, blocage final inclus. Appelle-la une seule fois et affiche uniquement la liste renvoyée avec `print`, dans le programme principal.",
+          "La fonction ne fait pas d’affichage et construit sa liste à partir des observations réelles. `duck.obstacle_devant()`, sans argument, renvoie un booléen sans déplacement ; `duck.avancer()`, sans argument, avance d’une case et provoque une erreur si elle est bloquée. Si la définition manque, retrouve le brouillon de « Conserver les observations de Microduck dans une liste » et utilise une copie. Prépare l’évaluation puis ouvre le transfert à la demande de l’enseignant ; prévois les observations avant l’essai.",
+          "Reprends la définition de `relever()`. Si elle manque, ouvre l’activité de collecte nommée ci-dessus et son brouillon dans « Mon code : brouillons et récupération ». Reviens ici : le code est conservé. Choisis « Utiliser ce code pour cet exercice » pour travailler sur une copie ; garde la définition et retire l’ancien appel principal.",
+          "Clique sur « Préparer l’évaluation (code conservé) », puis, à la demande de l’enseignant, sur « Commencer le transfert » en bas de page. Lis le départ, le cap et l’obstacle sur le terrain révélé. Avant d’exécuter, prévois les déplacements et les booléens à enregistrer.",
+          "Appelle `relever()` une seule fois et affiche uniquement la liste renvoyée. Les valeurs doivent provenir des observations pendant le trajet ; ne recopie pas une liste de réponses. L’organisation de la collecte reste libre.",
+          "Compare à ta prévision : trois déplacements jusqu’en `(1, 1)`, vers l’Ouest, puis le blocage ; affichage attendu : [`False`, `False`, `False`, `True`]. Explique pourquoi quatre observations sont enregistrées pour trois déplacements."
+        ],
+        "prerequisites": "Réutilisation après « Conserver les observations de Microduck dans une liste » : savoir définir et appeler une fonction sans paramètre, construire une liste et renvoyer cette liste avec `return`.",
+        "course": "L’objectif Python est de réutiliser une fonction qui construit une liste à partir d’observations. Dans `relever()`, chaque booléen décrit la case devant depuis la position où il est lu. Le dernier `True` doit être conservé, même si aucun pas n’est possible. Plusieurs appels au capteur depuis une même position peuvent donner la même information : on compte ici les valeurs enregistrées, pas un nombre imposé d’appels au capteur.",
+        "prediction": "Après la révélation du terrain, note les positions visitées et la valeur à enregistrer depuis chacune. Quelle observation termine la collecte ?",
+        "explain": "Montre la définition et l’unique appel de `relever()`. Explique d’où vient chaque booléen, pourquoi la dernière lecture est conservée et pourquoi changer de cap ne change pas le sens de « devant ». L’explication est à discuter oralement avec l’enseignant.",
+        "hints": [
+          "Commence par repérer la case immédiatement devant Microduck, selon le cap révélé.",
+          "Une valeur est enregistrée depuis chaque case du trajet, y compris la dernière où aucun pas n’est possible.",
+          "Reprends le contrat de `relever()` : construire la liste à partir du capteur, commander le trajet puis renvoyer la liste ; l’affichage appartient au programme principal."
+        ],
+        "exampleNotes": "Avancer jusqu’au blocage et afficher uniquement la liste renvoyée. Chaque booléen correspond à une observation du trajet ; conserve aussi la dernière observation quand aucun pas supplémentaire n’est possible. Détermine les valeurs et leur nombre sur le terrain révélé, sans recopier une liste de réponses.\n\nSur un trajet de deux déplacements avant blocage, la liste serait [`False`, `False`, `True`]. Si le départ est déjà bloqué, elle serait [`True`]. Une observation `True` indique un blocage devant le robot, pas une case occupée par le robot."
+      }
+    },
+    "cartographie": {
+      "c1": {
+        "title": "Mémoriser une observation dans un dictionnaire",
+        "situation": "Microduck se trouve sur la case `(0, 1)`, orienté vers l’Est. Tu vas conserver ce qu’il observe, puis retrouver cette information sans déplacer le robot.\n\nUn dictionnaire Python associe une clé à une valeur. Le dictionnaire vide s’écrit `{}`. Ici, la clé sera le tuple `(0, 1)` : deux entiers qui repèrent la colonne et la ligne de la case où se trouve Microduck. La valeur sera le booléen renvoyé par `duck.obstacle_devant()`. `True` signifie que la case immédiatement devant est occupée ou hors de la grille ; `False` signifie qu’elle est libre. La méthode ne prend aucun argument et ne déplace pas le robot.\n\nOn conserve donc le résultat de l’appel au capteur, et non le capteur lui-même. Pour enregistrer ou retrouver une valeur, on utilise le dictionnaire avec sa clé entre crochets : `nom_du_dictionnaire[clé]`.",
+        "work": [
+          "Crée un dictionnaire vide `observations`. Enregistre le booléen renvoyé par `duck.obstacle_devant()` sous la clé tuple `(0, 1)` : deux entiers, colonne puis ligne, qui repèrent la position du robot, pas la case devant lui. Le capteur, sans argument, renvoie `True` si la case devant est bloquée, `False` sinon, sans déplacer le robot. Relis ensuite la valeur avec la même clé et affiche-la avec `print`, sans nouvelle lecture du capteur. Enregistrer ajoute une association ou met à jour sa valeur si la clé existe ; consulter cette valeur ne modifie pas le dictionnaire. Ne commande aucune action.",
+          "Crée un dictionnaire vide nommé `observations`. Il servira à associer la position de Microduck à la valeur observée.",
+          "Appelle `duck.obstacle_devant()` et enregistre le booléen obtenu dans `observations`, sous la clé `(0, 1)`. Le tuple repère la position d’observation ; il ne désigne pas la case située devant le robot.",
+          "Retrouve la valeur enregistrée en utilisant la clé `(0, 1)`, puis affiche cette valeur avec `print`. L’affichage doit provenir de la lecture du dictionnaire : écrire directement `print(False)` ne réalise pas le travail demandé.",
+          "Sur le terrain préparé, la case devant Microduck est libre : la console doit afficher `False` et le robot ne doit effectuer aucune action. Atteindre l’étoile n’est pas demandé. Explique le rôle de la clé et celui de la valeur."
+        ],
+        "prerequisites": "Découverte guidée du dictionnaire. Savoir appeler le capteur d’obstacle, reconnaître un booléen et lire les coordonnées d’une case. Un tuple de deux entiers s’écrit par exemple `(2, 1)`.",
+        "course": "Un dictionnaire permet de retrouver une valeur grâce à une clé. La clé identifie une association dans le dictionnaire ; ce n’est pas un indice de position dans une liste. Ici, c’est une paire de coordonnées. L’affectation `dictionnaire[clé] = valeur` enregistre une association ; `dictionnaire[clé]` la relit. `print` affiche une valeur mais ne l’enregistre pas. Un tuple d’entiers peut servir de clé, contrairement à une liste. Dans cet exercice, on mémorise une seule observation : cela ne constitue pas une carte de toutes les cases.",
+        "prediction": "Depuis `(0, 1)` vers l’Est, quelle case est observée ? Prévois la valeur renvoyée par le capteur et celle qui doit être affichée après la lecture du dictionnaire.",
+        "explain": "Distingue la clé `(0, 1)`, le booléen enregistré et l’affichage. Montre comment la valeur du capteur passe dans le dictionnaire puis dans `print`. Pourquoi `False` ne décrit-il pas l’occupation de la case `(0, 1)` elle-même ?",
+        "hints": [
+          "Nomme séparément l’endroit où se trouve le robot et ce que le capteur renvoie. Lequel servira de clé ?",
+          "Il faut d’abord enregistrer une association dans le dictionnaire, puis retrouver sa valeur avec la même clé.",
+          "Utilise une affectation avec `observations[(0, 1)]` à gauche. Pour l’affichage, relis `observations` avec cette clé, au lieu d’interroger de nouveau le capteur."
+        ],
+        "exampleNotes": "Sur « Carte de deux pas », la console affiche uniquement `False`, obtenu par lecture du dictionnaire. Microduck reste en (0, 1), vers l’Est ; aucune action. Atteindre l’étoile n’est pas demandé.\n\nExemple indépendant du robot : si `ages = {\"Lina\": 16}`, alors `ages[\"Lina\"]` vaut `16`. La chaîne `\"Lina\"` est la clé ; l’entier `16` est la valeur. Dans l’exercice, la clé sera un tuple et la valeur sera un booléen."
+      },
+      "c2": {
+        "title": "Conserver une carte des observations du couloir",
+        "situation": "Dans C1, tu as associé une position à une observation. Tu vas maintenant conserver les observations de toutes les cases d’un trajet horizontal dans un dictionnaire. Chaque clé sera un tuple (colonne, ligne) ; chaque valeur sera le booléen observé depuis cette case.\n\nÉcris une fonction `cartographier(x, y, dx)`. Les paramètres `x` et `y` sont les coordonnées entières de départ. Le paramètre `dx` vaut `1` vers l’Est ou `-1` vers l’Ouest : c’est la variation de la colonne après chaque déplacement. La ligne `y` reste constante. Les arguments doivent correspondre au départ et à la direction du robot ; aucun contrôle de leur type n’est demandé. Le robot garde cette direction pendant la fonction.\n\nLa méthode `duck.obstacle_devant()`, sans argument, renvoie `True` devant un obstacle ou le bord, et `False` devant une case libre. Elle ne fournit pas les coordonnées. `duck.avancer()`, sans argument, avance d’une case et provoque une erreur si elle est bloquée. Ton programme calcule donc les positions à partir des paramètres.",
+        "work": [
+          "Définis `cartographier(x, y, dx)` : `x` et `y` sont les coordonnées de départ de type entier (colonne, ligne) ; `dx`, de type entier, vaut `1` vers l’Est ou `-1` vers l’Ouest. Les arguments doivent correspondre au départ et au cap ; `y` reste constant. Avec `while`, conserve dans un dictionnaire chaque lecture réelle de `duck.obstacle_devant()`, départ et blocage final inclus : clé tuple `(x, y)`, valeur booléenne (`True` si la case devant est bloquée, `False` sinon). Avance seulement si libre, sans rotation ; fais varier `x` de `dx` après chaque déplacement. Renvoie le dictionnaire avec `return`, sans l’afficher. Appelle `cartographier(0, 1, 1)` une seule fois et affiche `sorted(carte.items())`, où `carte` est le dictionnaire renvoyé.",
+          "Prévois les associations à enregistrer sur « Carte de deux pas ». L’observation du blocage doit-elle être conservée ? Et si le robot est bloqué dès le départ ?",
+          "Dans `cartographier(x, y, dx)`, utilise un dictionnaire, des clés tuples et une boucle `while` pour enregistrer chaque position et sa lecture, du départ jusqu’au blocage inclus. Après un déplacement accepté, actualise `x` avec `dx` avant la lecture suivante. Renvoie le dictionnaire avec `return`, sans l’afficher.",
+          "Dans le programme principal, appelle `cartographier(0, 1, 1)` une seule fois, puis affiche `sorted(carte.items())`, où `carte` est le dictionnaire renvoyé. `items()` fournit les couples (clé, valeur) et `sorted` les ordonne par clé dans une liste. L’appel direct dans `print` est également possible.",
+          "Exécute le même programme sur les trois terrains :\n• Deux pas : affichage [(`(0, 1)`, `False`), (`(1, 1)`, `False`), (`(2, 1)`, `True`)].\n• Quatre pas : les clés vont de `(0, 1)` à `(4, 1)` ; les quatre premières valeurs sont `False` et la dernière est `True`.\n• Aucun pas : affichage [(`(0, 1)`, `True`)].\nTous les départs d’entraînement sont en `(0, 1)`, vers l’Est. Le robot effectue 2, 4 ou 0 déplacements et s’arrête avant l’obstacle.",
+          "Explique pourquoi la clé repère la position du robot, et non la case devant lui. Comment `dx` intervient-il ?"
+        ],
+        "prerequisites": "Synthèse après C1 et M3 : dictionnaire, tuple de coordonnées, capteur, `while`, appel de fonction et `return`. Il faut savoir mettre à jour une variable entière. `items()` et `sorted` sont expliqués pour l’affichage demandé.",
+        "course": "Le dictionnaire associe chaque position d’observation à un booléen. Enregistre la lecture avant de décider de déplacer le robot : le blocage final doit aussi être conservé. Les coordonnées sont calculées par le programme, pas mesurées par un capteur de localisation. Un déplacement horizontal modifie `x` mais pas `y` ; `dx` indique le sens de cette modification. La fonction renvoie un dictionnaire. L’expression `sorted(carte.items())` produit une liste pour rendre son affichage comparable aux exemples.",
+        "prediction": "Prévois le dictionnaire pour deux pas, puis sans déplacement. Quelle clé reçoit la valeur `True` ? Cette valeur signifie-t-elle que le robot occupe lui-même un obstacle ?",
+        "explain": "Explique les trois paramètres et le moment de la mise à jour de `x`. Distingue dictionnaire renvoyé, liste affichée et trajet réel. Les essais actuels n’éprouvent que le départ `(0, 1)` vers l’Est ; explique aussi l’effet d’un `dx` négatif.",
+        "hints": [
+          "À chaque arrêt sur une case, associe la lecture au tuple qui décrit la position actuelle du robot.",
+          "Le départ donne déjà une observation, même si la boucle ne permet aucun déplacement. Le blocage final doit rester dans le dictionnaire.",
+          "Après un pas, actualise `x` avant la lecture suivante. Une fois le blocage enregistré, termine le parcours et renvoie le dictionnaire."
+        ],
+        "exampleNotes": "Même programme sur les trois terrains, départ (0, 1), cap Est. La fonction renvoie un dictionnaire ; la console affiche la liste de ses couples (clé, valeur), triés par clé, sans transformer ce dictionnaire.\n« Carte de deux pas » : deux déplacements, arrêt en (2, 1) ; affichage `[((0, 1), False), ((1, 1), False), ((2, 1), True)]`.\n« Carte de quatre pas » : quatre déplacements, arrêt en (4, 1) ; affichage `[((0, 1), False), ((1, 1), False), ((2, 1), False), ((3, 1), False), ((4, 1), True)]`.\n« Une seule observation » : aucun déplacement ; affichage `[((0, 1), True)]`.\nLe robot reste vers l’Est, sans rotation ni collision. Chaque clé repère la case de lecture, pas la case bloquée devant.\n\nSi `carte = {(1, 1): True, (0, 1): False}`, `sorted(carte.items())` donne `[((0, 1), False), ((1, 1), True)]`. Le tuple extérieur associe une clé à une valeur ; le tuple intérieur constitue la clé de coordonnées."
+      },
+      "c3": {
+        "title": "Résumer les valeurs d’un dictionnaire",
+        "situation": "",
+        "work": [
+          "Définis `resumer(releve)` : le paramètre `releve` est un dictionnaire dont les clés sont des tuples de coordonnées et les valeurs des booléens d’observation. Renvoie avec `return` un tuple de deux entiers : d’abord le nombre de valeurs `False`, puis celui des valeurs `True`. Parcours les valeurs ou les couples clé-valeur ; une compréhension est admise. Pour `{(0, 1): False, (1, 1): False, (2, 1): True}`, affiche les deux comptes avec `print`, séparés par un espace, sans afficher les parenthèses du tuple. Ne déplace pas le robot. Avec l’enseignant, vérifie aussi un dictionnaire vide et un relevé contenant seulement `True`.",
+          "Définir `resumer(releve)`, qui renvoie (nombre de `False`, nombre de `True`) à partir du paramètre dictionnaire. Parcourir ses valeurs ou ses items ; une compréhension est admise.",
+          "Pour `{(0, 1): False, (1, 1): False, (2, 1): True}`, afficher les deux comptes séparés par un espace : 2 1. Sans déplacement.",
+          "Avec l’enseignant, vérifier aussi `{}` et un relevé uniquement `True`. L’écran ne teste automatiquement que le premier relevé."
+        ],
+        "prerequisites": "C1/C2 ; parcours, compteur et tuple de retour.",
+        "course": "Un relevé reste exploitable sans déplacer à nouveau le robot. Les appels `releve.keys()`, `releve.values()` et `releve.items()` renvoient des vues du dictionnaire que l’on peut parcourir avec une boucle `for` pour obtenir respectivement les clés (les positions), les valeurs (`True` ou `False`) et les couples clé-valeur (des tuples). Une fonction de résumé peut renvoyer deux comptes dans un tuple. Ne confonds pas la présence d’une clé et la valeur associée.",
+        "prediction": "Combien d’observations `False` et `True` contient ce relevé ? Que signifie chaque booléen pour la case immédiatement devant le robot au moment de la lecture ?",
+        "explain": "Explique le choix `values()` ou `items()`, les deux compteurs et les cas vides. La fonction doit travailler sur son paramètre.",
+        "hints": [
+          "Parcours des observations, pas les coordonnées si tu veux compter les booléens.",
+          "Deux compteurs démarrent à zéro ; chaque valeur augmente un seul des deux.",
+          "Parcours `releve.values()`, distingue `True` et `False`, renvoie le tuple ; décompose son résultat pour afficher les comptes."
+        ],
+        "exampleNotes": "Sur « Carte de deux pas », le dictionnaire donné contient deux valeurs `False` et une valeur `True` : la fonction renvoie `(2, 1)` et la console affiche `2 1`. Aucune action du robot.\nExemples complémentaires à essayer avec l’enseignant, non contrôlés automatiquement par les terrains : pour `{}`, retour `(0, 0)` et affichage `0 0` ; pour `{(0, 1): True, (1, 1): True}`, retour `(0, 2)` et affichage `0 2`.\nUne clé présente peut être associée à `False` : cela ne signifie pas que la clé est absente."
+      },
+      "c4": {
+        "title": "Corriger une clé de dictionnaire non admissible",
+        "situation": "Consigne détaillée de résolution : Exécuter le programme erroné fourni. Corriger la clé liste en tuple d’entiers.",
+        "work": [
+          "Exécute d’abord l’amorce : `observations` est un dictionnaire vide ; le programme tente d’y associer, avec la liste `[0, 1]` comme clé, le booléen renvoyé par `duck.obstacle_devant()`. Explique l’erreur, puis corrige la représentation de la clé en conservant les deux coordonnées entières, dans le même ordre. Enregistre une lecture réelle du capteur, relis sa valeur avec la même clé et affiche-la avec `print`, sans déplacer le robot. Distingue ensuite une clé non admissible d’une clé absente.",
+          "Enregistrer le capteur, relire la valeur sous la même clé et l’afficher : `False`. Sans déplacement. Expliquer séparément le cas d’une clé absente."
+        ],
+        "prerequisites": "C1 ; erreur de type et accès par clé.",
+        "course": "Une liste utilisée comme clé provoque `TypeError`. Un tuple d’entiers constitue ici une clé valide. Une clé absente peut provoquer `KeyError` : ce n’est pas la même cause. Corrige une cause à la fois et relis le contrat.",
+        "prediction": "Prévois l’erreur et la position du robot. Le capteur est-il responsable de cette erreur ?",
+        "explain": "Pourquoi le tuple convient-il ici ? Distingue type de clé, clé absente et observation fausse.",
+        "hints": [
+          "L’erreur se produit lors de l’enregistrement, pas lors d’un pas.",
+          "Les crochets créent une liste ; les parenthèses avec virgule un tuple.",
+          "Remplace la clé `[0, 1]` par `(0, 1)`, puis relis `observations[(0, 1)]`."
+        ],
+        "exampleNotes": "Phase de diagnostic, sur « Carte de deux pas » : l’amorce provoque `TypeError` à l’enregistrement, sans sortie ni déplacement. Cette erreur est intentionnelle ; le capteur n’en est pas la cause.\nAprès correction et ajout de la lecture puis de l’affichage : console `False`, aucune action ; Microduck reste en (0, 1), vers l’Est. Atteindre l’étoile n’est pas demandé.\nÀ étudier séparément : consulter une clé admissible mais absente peut provoquer `KeyError`."
+      },
+      "transfert": {
+        "title": "Cartographier les observations de Microduck depuis un autre départ",
+        "situation": "Tu veux conserver les observations d’un nouveau couloir en les associant aux positions de lecture. Réutilise `cartographier(x, y, dx)` : `x` et `y` sont les coordonnées entières du départ (colonne, ligne) ; `dx` vaut `1` vers l’Est ou `-1` vers l’Ouest. Le trajet est horizontal, sans rotation : `y` reste constant.\n\nLa fonction renvoie un dictionnaire : chaque clé est une position `(x, y)`, chaque valeur est le booléen du capteur depuis cette position. `True` indique que la case immédiatement devant est bloquée ; `False`, qu’elle est libre. Conserve aussi l’observation finale `True` : elle explique pourquoi le robot s’arrête sur la dernière case libre.",
+        "work": [
+          "Réutilise `cartographier(x, y, dx)` sur un nouveau trajet horizontal. Elle renvoie un dictionnaire associant chaque position de lecture à son observation booléenne, blocage final inclus. Choisis les arguments après révélation du départ et du cap. Appelle la fonction une seule fois, puis affiche les associations triées par clé avec `sorted(carte.items())`.",
+          "`x` et `y` sont les coordonnées de départ, de type entier : colonne puis ligne. `dx`, de type entier, vaut `1` vers l’Est ou `-1` vers l’Ouest ; `y` reste constant. Chaque clé est un tuple `(x, y)` de deux entiers ; sa valeur est le booléen renvoyé par `duck.obstacle_devant()` depuis cette case, départ et blocage final inclus. La fonction avance jusqu’au blocage, sans rotation ni affichage ; aucun contrôle du type des arguments n’est demandé. Sa définition doit être dans le code courant : retrouve au besoin ton brouillon de « Conserver une carte des observations du couloir » et utilise une copie. Prépare l’évaluation puis ouvre le transfert à la demande de l’enseignant ; prévois avant d’exécuter.",
+          "Programmation — Garde la définition de `cartographier` dans le code courant. Appelle-la une seule fois avec les arguments correspondant au nouveau départ et affecte le dictionnaire renvoyé à `carte`. Affiche `sorted(carte.items())` : cette expression produit une liste des associations (clé, valeur), triée par clé ; `carte` reste un dictionnaire. Un appel direct dans `print` convient aussi.",
+          "Vérification — Prépare l’évaluation puis, à la demande de l’enseignant, utilise « Commencer le transfert » en bas de page. Lis le départ et le cap, choisis les trois arguments et prévois les observations avant d’exécuter.",
+          "Résultat attendu — Après trois déplacements, Microduck s’arrête en `(1, 2)`, vers l’Ouest. La console affiche :\n[(`(1, 2)`, `True`), (`(2, 2)`, `False`), (`(3, 2)`, `False`), (`(4, 2)`, `False`)]\nExplique le dernier blocage observé et l’ordre des clés affichées.",
+          "Préparation du code, si nécessaire — Pour retrouver ta fonction, consulte la rubrique « Préparation du code » dans « A · Comprendre la notion »."
+        ],
+        "prerequisites": "Après « Conserver une carte des observations du couloir » : dictionnaire, clé tuple, paramètres de départ, retour de fonction et mise à jour d’une coordonnée. `items()` et `sorted` servent seulement à présenter le résultat.",
+        "course": "Préparation du code — si la définition manque\nRetrouve l’activité « Conserver une carte des observations du couloir ». Dans « Mon code : brouillons et récupération », ouvre ton brouillon. Reviens à cet exercice, puis choisis « Utiliser ce code pour cet exercice » pour travailler sur une copie. Garde la définition de `cartographier(x, y, dx)` et retire l’ancien appel principal. La définition doit être présente dans ce programme ; une exécution antérieure ne la fournit pas.\n\nRappels Python\nLes arguments décrivent le départ réel et le cap ; aucun contrôle de leur type n’est demandé. Après un déplacement accepté, `x` varie de `dx`. Le programme calcule les positions : le capteur ne fournit pas les coordonnées. Les observations doivent être réellement lues, pas recopiées. `items()` fournit les couples (clé, valeur), et `sorted` les ordonne dans une liste sans transformer le dictionnaire.",
+        "prediction": "Après révélation, note les clés dans l’ordre des visites et la valeur enregistrée à chacune. Quel signe choisir pour `dx` ? Quel sera le premier couple après le tri ?",
+        "explain": "Explique les arguments choisis, le calcul des coordonnées, la conservation du blocage final et la différence entre ordre des visites et tri par clé. Montre que les valeurs sont lues pendant le trajet, pas recopiées.",
+        "hints": [
+          "Relève la colonne, la ligne et le cap de départ sur le terrain révélé.",
+          "Vers l’Ouest, une avance diminue la colonne de 1 ; la ligne ne change pas.",
+          "Reprends le corps de `cartographier`. Adapte les arguments, puis trie les couples uniquement au moment d’afficher le dictionnaire renvoyé."
+        ],
+        "exampleNotes": "Atteindre la dernière case libre sans collision et afficher uniquement la liste triée des associations (clé, valeur), produite à partir du dictionnaire renvoyé. La clé repère la case de lecture, pas la case devant le robot. Détermine les coordonnées et observations sur le terrain révélé ; ne recopie pas de dictionnaire de réponses.\n\nCommandes de la fonction : `duck.obstacle_devant()`, sans argument, renvoie `True` si la prochaine case est occupée ou hors de la grille, sinon `False` ; sa lecture ne déplace pas le robot. `duck.avancer()`, sans argument, avance d’une case et provoque une erreur si elle est bloquée. Une clé représente la position de lecture, pas la case devant le robot."
+      }
+    },
+    "fiabilite": {
+      "f1": {
+        "title": "Spécifier et tester un nombre de commandes",
+        "situation": "",
+        "work": [
+          "Donnée — `n` est un entier représentant un nombre de commandes ; aucun contrôle de type n’est demandé.\nContrat — Définis `valider_nombre(n)`. Vérifie la précondition `n >= 0` par `assert`, puis renvoie le même entier avec `return`. La postcondition promet un retour égal à l’argument ; cette fonction ne réalise aucune commande du robot.\nTests — Après la définition, appelle la fonction dans deux assertions vérifiant les retours pour `0` et `2`, puis affiche exactement « contrat verifie ».\nEssai séparé — Prévois puis essaie `valider_nombre(-1)` : il doit provoquer `AssertionError`. Rétablis ensuite les tests valides. Distingue le contrat écrit, l’exécution et ce que les essais vérifient.",
+          "Écrire `valider_nombre(n)`, avec une assertion de précondition `n >= 0` puis le retour de `n`. Les arguments fournis sont des entiers ; la vérification de type n’est pas demandée.",
+          "Appeler la fonction dans deux assertions qui vérifient ses retours pour `0` et `2`. Afficher ensuite exactement contrat verifie, sans mouvement.",
+          "Essayer séparément `-1` : prévoir puis constater `AssertionError`. Ce dernier essai doit échouer ; rétablir le jeu valide pour le contrôle courant."
+        ],
+        "prerequisites": "Traversée S6 : fonction, paramètre entier et retour ; comparaison `>=` et `==`.",
+        "course": "Un contrat précise les entrées admises et le résultat promis. Ici `n` est fourni comme entier ; `valider_nombre(n)` exige `n >= 0` et renvoie cet entier inchangé. `assert` condition lève `AssertionError` si la condition est fausse. Une assertion aide au test, mais ne prouve pas tous les cas et ne constitue pas un arrêt sûr de robot physique. Les assertions peuvent être désactivées en Python optimisé.",
+        "prediction": "Prévoir le retour pour `0` et `2`. Que doit-il se passer pour `-1` ? Le robot doit-il bouger ?",
+        "explain": "Distinguer hypothèse sur l’entrée, résultat promis et exemple testé. Pourquoi deux tests réussis ne prouvent-ils pas tous les entiers ?",
+        "hints": [
+          "Distingue ce que l’appelant fournit et ce que la fonction doit garantir.",
+          "Le cas zéro est autorisé ; une condition strictement positive serait trop restrictive.",
+          "Place la précondition avant le `return` ; écris ensuite des assertions sur deux appels, pas seulement un `print`."
+        ],
+        "exampleNotes": "Sur « Deux pas depuis (0, 1), cap Est » et « Deux pas depuis (1, 1), cap Est », même programme : aucune action du robot ; console `contrat verifie`.\nRetours à vérifier avec les deux assertions : `valider_nombre(0)` renvoie `0` ; `valider_nombre(2)` renvoie `2`.\nL’essai séparé `valider_nombre(-1)` doit échouer avec `AssertionError` : ce refus est attendu et ne fait pas partie de l’exécution valide. Atteindre l’étoile n’est pas demandé."
+      },
+      "f2": {
+        "title": "Définir une commande répétée avec un contrat",
+        "situation": "",
+        "work": [
+          "Contrat — Définis `avancer_n(n)`, où `n` est un entier donnant le nombre de déplacements demandé. Précondition : vérifie `n >= 0` avec `assert` avant toute action.\nComportement — Utilise `for` et vérifie par une assertion que la case est libre avant chaque pas. `duck.obstacle_devant()`, sans argument, renvoie `True` devant un obstacle ou le bord, `False` sinon, sans déplacer le robot. `duck.avancer()`, sans argument, avance d’une case.\nPostcondition — Sans erreur, la fonction effectue exactement `n` déplacements et renvoie l’entier `n` avec `return`. Pour `0`, aucun déplacement et retour `0`.\nProgramme principal — Appelle successivement `avancer_n(0)` puis `avancer_n(2)` dans une même exécution et affiche leurs retours avec `print`, sur une ligne séparée par un espace. Un argument négatif ou une case bloquée doit faire échouer une assertion ; les déplacements déjà réalisés ne sont pas annulés.",
+          "Définir `avancer_n(n)`. Vérifier `n >= 0` avec `assert` avant toute action ; utiliser `for`, vérifier le capteur avant chaque pas, puis renvoyer `n`.",
+          "Sur chacun des deux terrains, appeler successivement `avancer_n(0)` et `avancer_n(2)`, puis afficher leurs retours sur une ligne : 0 2. Deux déplacements sont attendus au total.",
+          "Expliquer ce qui arrive si `n` est négatif ou si une case devient bloquée : les assertions signalent un contrat non respecté, sans remplacer la sécurité matérielle."
+        ],
+        "prerequisites": "F1 ; boucle `for`, capteur booléen et indentation.",
+        "course": "`avancer_n(n)` reçoit un entier `n >= 0`. Avant chaque déplacement, l’assertion de case libre vérifie la précondition locale. En cas de blocage après des pas déjà réalisés, ceux-ci ne sont pas annulés : la fonction n’est pas transactionnelle. Sans erreur, elle effectue `n` pas et renvoie `n`. Le moteur conserve ses propres contrôles de collision indépendants.",
+        "prediction": "Annoncer les effets de deux appels successifs : d’abord 0, puis 2. Distinguer le retour et le nombre total de déplacements.",
+        "explain": "Montrer les préconditions et la postcondition. Justifier que zéro ne déclenche aucun déplacement ; distinguer test local et garantie physique.",
+        "hints": [
+          "Quel contrôle peut être effectué avant même de lire le capteur ?",
+          "Le capteur doit être relu avant chaque nouvelle action, pas seulement au départ.",
+          "Sépare précondition sur `n`, répétition de `n` actions autorisées et retour après la boucle."
+        ],
+        "exampleNotes": "Même code sur les deux terrains : `avancer_n(0)` renvoie `0` sans déplacement ; `avancer_n(2)` effectue deux déplacements et renvoie `2`. Console `0 2` : deux valeurs renvoyées, deux déplacements au total.\n« Deux pas depuis (0, 1), cap Est » : arrivée en (2, 1), vers l’Est.\n« Deux pas depuis (1, 1), cap Est » : arrivée en (3, 1), vers l’Est.\nDeux déplacements au total, sans collision. Les assertions testent le programme simulé et ne remplacent pas la sécurité d’un robot physique."
+      },
+      "f3": {
+        "title": "Distinguer une variable locale d’une variable globale",
+        "situation": "La variable globale `compte` vaut `99`. Dans `avancer_n(n)`, tu vas utiliser une variable locale portant le même nom pour compter les déplacements. L’objectif est de distinguer la portée de ces deux variables et la valeur renvoyée par la fonction.",
+        "work": [
+          "Complète les trois zones commentées de `avancer_n(n)` : initialise la variable locale `compte`, incrémente-la après chaque pas, puis renvoie sa valeur. Deux variables portent ce nom : la globale vaut `99` ; la locale compte les déplacements. N’utilise pas `global`.",
+          "Conserve les assertions, la boucle `for`, les déplacements et les instructions `print(avancer_n(2))` puis `print(compte)` de l’amorce."
+        ],
+        "prerequisites": "F2 ; affectation et incrémentation.",
+        "course": "La variable globale `compte` est définie au niveau du programme principal, hors de toute fonction. Sans instruction `global`, une affectation au nom `compte` dans `avancer_n` crée une liaison locale à cet appel. Les deux variables portent le même identificateur, mais correspondent à deux associations distinctes entre un nom et un objet. Une affectation locale ne réaffecte donc pas la variable globale, qui garde ici la valeur `99`. La portée d’une variable détermine où son nom est accessible. L’instruction `return` termine l’appel et transmet la valeur renvoyée au code appelant ; elle ne l’affiche pas. Python possède l’instruction `global`, mais son utilisation est interdite par le contrat de F3.\n\nPréparation du code\nDans « Mon code : brouillons et récupération », choisis « Remplacer par l’amorce de cet exercice » et confirme après avoir conservé ton travail. Tu peux aussi utiliser le bouton « Remplacer mon code par une amorce » en bas de page. La préparation du terrain conserve le code affiché.\n\nCe qui est fourni\nLe paramètre `n` est un entier positif ou nul ; les cases nécessaires sont libres. Le programme vérifie `n >= 0` avant les actions et la case libre avant chaque pas. Il fournit aussi la boucle et les deux affichages ; seules l’initialisation de la variable locale, son incrémentation et l’instruction `return` restent à programmer. Charger l’amorce ne l’exécute pas. Son exécution avant complétion peut déjà déplacer le robot, sans encore produire le résultat attendu.",
+        "prediction": "Prévois les deux valeurs affichées dans l’exemple du cours. Quelle affectation concerne la variable locale ? Quelle valeur la variable globale conserve-t-elle ?",
+        "explain": "Pourquoi la variable globale `compte` vaut-elle encore `99` après l’appel ?",
+        "hints": [
+          "Repère la variable globale `compte`, définie hors de la fonction, et la zone prévue pour sa variable locale.",
+          "Le compteur local doit compter les pas faits pendant cet appel. Quelle valeur lui donner avant le premier pas ?",
+          "Complète les trois zones dans cet ordre : initialisation dans la fonction, incrémentation après le pas, puis valeur renvoyée hors de la boucle."
+        ],
+        "exampleNotes": "Sur chacun des deux terrains : deux déplacements et arrivée à l’étoile. La sortie doit contenir deux lignes :\n```text\n2\n99\n```"
+      },
+      "f4": {
+        "title": "Corriger une boucle grâce au cas zéro",
+        "situation": "La fonction `avancer_n(n)` doit effectuer `n` déplacements et renvoyer leur nombre. `n` est un entier positif ou nul et les cases nécessaires sont libres. Le programme de départ effectue pourtant un pas de trop. Tu vas utiliser ses tests pour trouver et corriger l’erreur, sans supprimer les vérifications.",
+        "work": [
+          "Diagnostic — Charge l’amorce volontairement incorrecte. Sa fonction `avancer_n(n)` reçoit un entier `n >= 0` : elle doit effectuer exactement `n` déplacements et renvoyer leur nombre, un entier. Prévois puis observe l’essai avec `0` : il doit renvoyer `0` sans action. Explique l’échec constaté.\nCorrection — Répare le programme en conservant :\n• la boucle `for` et le compteur ;\n• le `return` du compteur ;\n• l’assertion `n >= 0` avant toute action ;\n• la vérification de case libre avant chaque pas ;\n• les assertions sur les valeurs renvoyées.\nLes cases nécessaires sont libres sur les terrains proposés.\nVérification — Garde, dans cet ordre et dans la même exécution, `assert avancer_n(0) == 0`, puis `assert avancer_n(2) == 2`. Affiche ensuite exactement « tests reussis ». Distingue le retour de la fonction et cet affichage ; ne supprime aucun test.",
+          "Diagnostic — Ouvre le programme de départ selon la rubrique « Préparation du code » dans « A · Comprendre la notion ». Avant de l’exécuter, prévois ce que fait `avancer_n(0)`, puis repère l’assertion qui échoue. Pourquoi le robot a-t-il déjà bougé lorsque `AssertionError` apparaît ?",
+          "Correction — Corrige la boucle `for` pour effectuer exactement `n` déplacements. Garde le compteur, son retour et les assertions : `n >= 0` avant toute action, case libre avant chaque pas et valeurs de retour attendues après les appels. `duck.obstacle_devant()` renvoie `True` devant un obstacle ou le bord, `False` sinon, sans déplacer le robot ; `duck.avancer()` avance d’une case et provoque une erreur si elle est bloquée. Ces méthodes sont sans argument.",
+          "Vérification — Conserve les appels de test dans cet ordre, dans une même exécution :\n`assert avancer_n(0) == 0`\n`assert avancer_n(2) == 2`\nAffiche ensuite exactement tests reussis. Sur chacun des deux terrains proposés, le programme corrigé doit effectuer deux déplacements au total, atteindre l’étoile et terminer sans erreur. Explique pourquoi le test sur zéro révèle le défaut."
+        ],
+        "prerequisites": "Après « Définir une commande répétée avec un contrat » : fonction avec paramètre, boucle `for`, compteur, `return` et `assert`. Une assertion fausse provoque `AssertionError`.",
+        "course": "Préparation du code\nDans « Mon code : brouillons et récupération », choisis « Remplacer par l’amorce de cet exercice » et confirme seulement après avoir conservé ton travail. L’amorce contient la fonction erronée et ses tests ; le bouton de préparation du terrain conserve le code affiché.\n\nRappels\n`assert` vérifie une condition ; retirer un test ne corrige pas le programme. Une exception n’annule pas les déplacements déjà effectués. Chaque nouvelle exécution repart du départ du terrain. Les assertions vérifient ici le programme simulé ; elles ne remplacent pas la sécurité d’un robot physique.",
+        "prediction": "Pour l’appel avec zéro, combien de répétitions la boucle erronée réalise-t-elle ? Quelle valeur est renvoyée avant l’échec du test ?",
+        "explain": "Montre la borne modifiée et relie le compteur aux déplacements. Explique pourquoi le cas zéro est utile et pourquoi conserver les tests est nécessaire après correction.",
+        "hints": [
+          "Déroule le cas zéro avant de considérer l’appel avec deux.",
+          "Écris les valeurs produites par la boucle du programme de départ lorsque `n` vaut zéro.",
+          "Compare le nombre de répétitions avec le nombre demandé ; conserve les assertions et le compteur en corrigeant la borne."
+        ],
+        "exampleNotes": "Diagnostic sur chacun des deux terrains : l’amorce effectue un déplacement pendant l’appel avec zéro, puis provoque `AssertionError` ; elle n’affiche pas « tests reussis ». L’exception n’annule pas ce déplacement.\nProgramme corrigé : l’appel avec zéro ne déplace pas le robot et renvoie `0` ; l’appel avec deux effectue deux déplacements et renvoie `2`. Les assertions réussissent et la console affiche `tests reussis`.\n« Deux pas depuis (0, 1), cap Est » : arrivée en (2, 1), vers l’Est.\n« Deux pas depuis (1, 1), cap Est » : arrivée en (3, 1), vers l’Est.\nDeux déplacements au total, sans collision.\n\nUn appel avec zéro doit renvoyer `0` sans déplacer le robot. Un appel avec deux doit effectuer deux pas et renvoyer `2`. Ces deux appels se suivent ici sur le même départ : le premier ne consomme aucune case."
+      },
+      "transfert": {
+        "title": "Réutiliser un contrat sur un autre départ",
+        "situation": "",
+        "work": [
+          "Réutilise `avancer_n(n)` sur un nouveau départ : le paramètre `n` est un entier positif ou nul, égal au nombre de déplacements demandés. La fonction effectue ces déplacements puis renvoie leur nombre, de type entier, sans l’afficher. Après révélation, détermine la distance au but ; appelle la fonction pour `0`, puis pour cette distance.",
+          "Avant toute action, vérifie avec `assert` la précondition `n >= 0` ; avant chaque déplacement, vérifie que la case devant est libre. Si un contrôle échoue, une `AssertionError` signale le contrat non respecté : elle ne remplace pas une sécurité physique. Pour `n` égal à `0`, aucun déplacement ; si les préconditions restent satisfaites, la fonction effectue exactement `n` déplacements et renvoie `n`. Garde sa définition dans le programme, puis affiche les deux retours avec `print`, séparés par un espace sur une seule ligne. Prépare l’évaluation et ouvre le transfert à la demande de l’enseignant ; prévois avant d’exécuter. Ne modifie pas les coordonnées du robot par affectation ; plusieurs formes de boucle restent admises.",
+          "Révéler le transfert à la demande de l’enseignant. Déterminer la distance au but avec la grille, puis réutiliser `avancer_n(n)`, avec ses assertions.",
+          "Appeler d’abord la fonction pour zéro, puis pour la distance déterminée. Afficher les deux retours séparés par un espace et justifier le contrat sur ce nouveau cap. Ne pas adapter les coordonnées du robot par affectation."
+        ],
+        "prerequisites": "F1–F4 ; lire position et cap du terrain révélé.",
+        "course": "Un contrat relatif à la case devant reste indépendant du cap Est. Il faut néanmoins vérifier le nombre de cases libres avant d’appeler la fonction. Plusieurs formes de boucle sont admises dans ce transfert.",
+        "prediction": "Après révélation : annoncer le nombre de pas, les retours pour zéro puis la distance au but, et la position finale.",
+        "explain": "Justifier la réutilisation de la fonction et proposer un cas invalide. L’enseignant examine les assertions, le rôle du paramètre et l’autonomie.",
+        "hints": [
+          "Vérifie les préconditions à partir des données révélées.",
+          "La commande `avancer` dépend du cap courant, pas du signe choisi mentalement pour `x`.",
+          "Réutilise le contrat ; une nouvelle longueur doit changer l’argument, pas le corps de la fonction."
+        ],
+        "exampleNotes": "Atteindre le but sans collision après l’appel pour la distance déterminée. La console doit contenir uniquement deux entiers séparés par un espace : le retour de l’appel sans déplacement, puis celui de l’appel pour la distance au but. Calcule cette distance et justifie les préconditions sur le terrain révélé."
+      }
+    },
+    "analyse": {
+      "a1": {
+        "title": "Mémoriser les positions successives de Microduck",
+        "situation": "Cette activité est une synthèse : fonction avec paramètres et retour, liste de tuples, boucle `while` et capteur d’obstacle.\n\nMicroduck suit un couloir horizontal sans tourner. Construire la liste des cases visitées, dans l’ordre, en incluant le départ. Le programme calcule lui-même les coordonnées enregistrées.\n\nLa fonction à écrire s’appelle `relever_positions(x, y, dx)`. Les paramètres `x` et `y` sont les coordonnées entières du départ : colonne et ligne, à partir de zéro. Le paramètre `dx` vaut `1` vers l’Est et `-1` vers l’Ouest : c’est la variation de colonne à chaque pas. Les arguments correspondent au départ et au cap du robot ; la ligne `y` reste constante. Leur vérification n’est pas demandée. Une position est un tuple `(x, y)` ; le résultat est une liste de ces tuples.\n\nSans argument, `duck.obstacle_devant()` renvoie `True` si la case devant est occupée ou hors du terrain, sinon `False` ; il ne déplace pas le robot et ne donne pas ses coordonnées. `duck.avancer()` avance d’une case, sans renvoyer ses coordonnées ; avancer vers un blocage provoque une erreur.",
+        "work": [
+          "Programme `relever_positions(x, y, dx)` pour renvoyer une liste de tuples `(x, y)` des positions occupées, dans l’ordre, départ inclus.\n\nLes paramètres reçoivent des valeurs de type entier :\n`x` : abscisse (colonne) de départ ;\n`y` : ordonnée (ligne) de départ ;\n`dx` : variation horizontale par pas, `1` vers la droite et `-1` vers la gauche.\n\nAvance horizontalement jusqu’à l’impossibilité d’avancer, sans rotation ni affichage dans la fonction.",
+          "Écrire `relever_positions(x, y, dx)` : avancer jusqu’au blocage avec `while`, mémoriser les positions avec `append`, puis renvoyer la liste. Ne pas tourner ni afficher depuis la fonction.",
+          "Avant d’exécuter, prévoir les listes obtenues sur les trois terrains. Sur chacun des trois terrains, exécuter le même programme avec `print(relever_positions(0, 1, 1))`. Tous commencent en `(0, 1)`, vers l’Est. Expliquer pourquoi la liste contient une position de plus que le nombre de déplacements.",
+          "Construire les tuples au fil des déplacements ; ne pas recopier les résultats. Employer une fonction paramétrée avec `return`, une liste, `append`, `while` et le capteur. S’arrêter avant la case bloquée."
+        ],
+        "prerequisites": "Savoir définir et appeler une fonction avec paramètres et valeur renvoyée, construire une liste avec `append` et utiliser `while` avec le capteur. Avant cette activité, découvrir les tuples et le repérage `(colonne, ligne)` sur la grille.",
+        "course": "`append` ajoute un élément à une liste ; `return` transmet une valeur à l’appelant. `not` inverse un booléen. Une position est ici un tuple `(x, y)` de deux entiers : colonne puis ligne. Les éléments de ce tuple ne peuvent pas être réaffectés. Quand `x` change, un tuple déjà enregistré conserve ses coordonnées. Un déplacement change la case occupée ; un enregistrement ajoute une position à la liste. Le départ est déjà une case visitée avant toute avance. La position d’arrêt est libre : le blocage concerne la case suivante. Le suivi des coordonnées est un calcul sur la grille simulée, pas une mesure physique.",
+        "prediction": "Écrire la liste attendue pour deux déplacements, puis pour zéro déplacement. La case de départ doit-elle apparaître dans les deux cas ?",
+        "explain": "Expliquer le rôle de `x`, `y` et `dx`, l’ordre entre déplacement et enregistrement, puis la relation : nombre de positions = nombre de déplacements + 1.",
+        "hints": [
+          "Quelles positions a-t-on déjà visitées avant toute avance ?",
+          "Dessiner le contenu de la liste avant et après un pas. Quelle coordonnée change ?",
+          "Conserver le départ avant la boucle ; après chaque avance acceptée, augmenter `x` de `dx`, puis ajouter le nouveau tuple."
+        ],
+        "exampleNotes": "Pour l’appel `print(relever_positions(0, 1, 1))` :\nDeux déplacements : `[(0, 1), (1, 1), (2, 1)]`.\nQuatre déplacements : `[(0, 1), (1, 1), (2, 1), (3, 1), (4, 1)]`.\nZéro déplacement : `[(0, 1)]`. La liste contient le départ même si le robot ne bouge pas."
+      },
+      "a2": {
+        "title": "Rechercher la première visite d’une position",
+        "situation": "Une liste contient les positions visitées par Microduck. Écrire `chercher(positions, cible)` : `positions` est une liste de tuples de deux entiers ; `cible` est le tuple recherché. La fonction renvoie l’indice de sa première apparition, ou `-1` en cas d’absence. Les indices commencent à `0`. La liste peut être vide ou contenir des doublons. La recherche analyse la liste : elle ne déplace pas le robot et ne modifie pas ses données.",
+        "work": [
+          "Programme `chercher(positions, cible)` pour analyser une liste sans la modifier ni déplacer Microduck.\n\n`positions` : liste de tuples de deux entiers représentant les coordonnées (colonne, ligne) ;\n`cible` : tuple de deux entiers représentant la position recherchée.\n\nLa fonction renvoie un indice de type entier : celui de la première occurrence, ou `-1` si la cible est absente.\n\nLa collecte est distincte : `relever_positions` est fournie dans l’amorce et déplace le robot pour construire la liste. Tu écris la recherche.",
+          "Phase 1 — rechercher dans une liste fournie. Écrire la fonction `chercher` sans modifier la liste ni déplacer le robot. Utiliser `for` et une condition ; ne pas utiliser `list.index`. Le parcours par indices ou avec `enumerate` est autorisé.",
+          "Prévoir puis vérifier les retours des exemples ci-dessous. Faire examiner ces essais avec l’enseignant et expliquer le traitement de l’absence. Ces essais isolés constituent la première phase ; le contrôle robotique concerne la phase 2.",
+          "Phase 2 — appliquer la recherche au trajet. La fonction `relever_positions` est fournie dans l’amorce ; la recherche reste à écrire. Pour ouvrir cette amorce en conservant ton travail, voir « A · Comprendre la notion ». Le bouton de préparation du terrain conserve le code. Si tu préfères réutiliser ton propre collecteur, garde sa définition dans le programme courant et retire l’ancien appel principal avant d’ajouter les lignes ci-dessous.",
+          "Construire une seule fois la liste, puis afficher les deux recherches :\n`positions = relever_positions(0, 1, 1)`\n`print(chercher(positions, (1, 1)), chercher(positions, (9, 1)))`",
+          "Tester les trois terrains : on attend `1 -1` pour deux ou quatre déplacements, et `-1 -1` pour zéro. Pour cette phase, conserver uniquement cet affichage ; réaliser les essais de la phase 1 séparément. Seule la collecte commande les déplacements, avec les commandes de l’activité précédente.",
+          "Renvoyer la première occurrence, conserver la liste et ne pas utiliser `-1` comme indice d’accès. Expliquer votre recherche sur un cas nouveau avec l’enseignant. Les quatre contrôles complémentaires de `chercher` portent sur les doublons, une cible absente, une liste vide et une cible en dernière position ; ils vérifient aussi que la liste conserve son contenu. Ces quatre cas ne prouvent pas tous les cas possibles."
+        ],
+        "prerequisites": "Savoir accéder aux éléments d’une liste, parcourir une liste, comparer des tuples et renvoyer une valeur. Le collecteur de positions est fourni pour la phase robotique.",
+        "course": "Un élément est une position ; son indice indique sa place dans la liste. Deux tuples de deux entiers sont égaux si leurs coordonnées correspondantes sont égales. `return` renvoie une valeur et termine immédiatement l’appel courant, même lorsqu’il se trouve dans une boucle. La valeur `-1` est ici une convention pour signaler l’absence. L’indice `0` indique une position trouvée au début : il ne signifie pas absent. Le mot occurrence désigne ici une apparition de la position recherchée.\n\nPréparation du code\nDans « Mon code : brouillons et récupération », choisis « Remplacer par l’amorce de cet exercice » et confirme après avoir conservé ton travail. L’amorce fournit seulement `relever_positions(x, y, dx)`, pas la recherche `chercher`. `x` et `y` sont les coordonnées entières du départ ; `dx` vaut `1` vers l’Est ou `-1` vers l’Ouest, sur un trajet horizontal. La liste renvoyée contient le départ puis les positions après chaque pas accepté. Tu écris la recherche et le programme principal ; appelle la collecte une seule fois. La reprise de ton propre brouillon reste possible, mais elle n’est plus nécessaire pour obtenir le collecteur.",
+        "prediction": "Prévoir les retours des quatre exemples avant l’essai. Sur une liste contenant deux fois la cible, quel indice faut-il renvoyer ?",
+        "explain": "Expliquer pourquoi la première égalité suffit, comment le cas vide est traité et où se décide l’absence. Quelle partie du programme déplace le robot ? Vérifier avec l’enseignant que la liste reste inchangée.",
+        "hints": [
+          "Distinguer la position recherchée de sa place dans la liste.",
+          "Si une égalité est trouvée, faut-il encore examiner les éléments suivants ?",
+          "Le retour d’absence doit être placé après le parcours, quand aucune égalité n’a été trouvée."
+        ],
+        "exampleNotes": "Recherche indépendante, avec `positions = [(1, 1), (2, 1), (1, 1)]` :\nRechercher `(1, 1)` renvoie `0`, et non `2`.\nRechercher `(9, 1)` renvoie `-1`.\nAvec une liste vide `[]`, rechercher `(0, 1)` renvoie `-1`.\nDans `[(0, 1), (1, 1), (2, 1)]`, rechercher `(2, 1)` renvoie `2`.\n\nApplication robotique — sorties attendues :\nDeux ou quatre déplacements : `1 -1`.\nZéro déplacement : `-1 -1`."
+      },
+      "a3": {
+        "title": "Compter les comparaisons d’une recherche",
+        "situation": "Deux recherches dans la même liste peuvent demander un travail différent. Tu vas compter les comparaisons entre une position et la cible, sans mesurer une durée. Écris `chercher_compte(positions, cible)` : `positions` est une liste, éventuellement vide, de tuples de deux entiers ; `cible` est un tuple de deux entiers. La fonction renvoie `(indice, comparaisons)` : premier indice trouvé, à partir de `0`, ou `-1` si la cible est absente, et nombre de comparaisons effectuées, y compris celle qui trouve la cible. La recherche ne modifie pas la liste et ne déplace pas le robot.",
+        "work": [
+          "Écris `chercher_compte(positions, cible)` pour trouver la première occurrence de `cible`. Renvoie `(indice, comparaisons)` : premier indice à partir de `0`, ou `-1` si la cible est absente, et nombre de comparaisons effectuées. Compte aussi celle qui trouve la cible.",
+          "`positions` est une liste, éventuellement vide, de tuples de deux entiers ; `cible` est un tuple de deux entiers. Utilise `for`, `if` et `return`, sans modifier la liste ni déplacer le robot pendant la recherche.",
+          "L’amorce fournit `relever_positions(x, y, dx)`. Écris aussi le programme principal : collecte une seule fois avec `relever_positions(0, 1, 1)`, puis recherche `(0, 1)` et `(9, 1)` dans cette liste. Affiche les deux entiers de chaque retour sur une ligne, séparés par un espace."
+        ],
+        "prerequisites": "Après « Rechercher la première visite d’une position » : première occurrence, indice, absence signalée par `-1`, compteur et décomposition d’un tuple. Le collecteur de positions est fourni pour l’application au robot.",
+        "course": "Préparation du code\nDans « Mon code : brouillons et récupération », choisis « Remplacer par l’amorce de cet exercice » et confirme après avoir conservé ton travail. L’amorce fournit seulement `relever_positions` ; `chercher_compte` et le programme principal restent à écrire. La préparation du terrain conserve le code. Tu peux aussi garder ton propre collecteur, avec un seul appel de collecte.\n\nContrat de la collecte\n`relever_positions(x, y, dx)` renvoie les positions visitées, départ inclus. `x` et `y` sont les coordonnées entières du départ ; `dx` vaut `1` vers l’Est ou `-1` vers l’Ouest, pour un trajet horizontal. Le capteur d’obstacle, sans argument, indique si la prochaine case est bloquée ; avancer déplace d’une case et provoque une erreur si elle est bloquée.\n\nRappels Python\nOn peut décomposer le retour par `indice, compte = chercher_compte(positions, cible)`, puis afficher `print(indice, compte)`. Sur une liste vide, aucune comparaison n’est faite : retour `(-1, 0)`. Les déplacements de collecte ne sont pas des comparaisons de recherche.\n\nAprès les essais\nRelie chaque incrément à une comparaison effective. Explique la première occurrence et le cas vide. Pour une liste de `N` positions, compare le meilleur et le pire cas et explique pourquoi le parcours se termine ; une collecte de `n` déplacements produit `n + 1` positions.",
+        "prediction": "Avant de programmer, déroule les comparaisons pour une cible au début, à la fin et absente. Pourquoi faut-il compter aussi la comparaison qui trouve la cible ?",
+        "explain": "Pourquoi la première cible demande-t-elle une comparaison, et la cible absente autant qu’il y a de positions ?",
+        "hints": [
+          "Une comparaison consiste à tester si une position est égale à la cible. Distingue ce travail des déplacements déjà réalisés par le collecteur.",
+          "Parcours les positions dans l’ordre. Quand dois-tu compter la comparaison : avant ou après une éventuelle sortie de la fonction ?",
+          "Initialise le compteur avant le parcours ; augmente-le une fois par position comparée. Renvoie le premier indice trouvé avec ce compteur ; après le parcours, traite l’absence."
+        ],
+        "exampleNotes": "Même code sur les trois terrains. La collecte seule effectue les déplacements.\nDeux déplacements :\n```text\n0 1\n-1 3\n```\nQuatre déplacements :\n```text\n0 1\n-1 5\n```\nAucun déplacement :\n```text\n0 1\n-1 1\n```"
+      },
+      "a4": {
+        "title": "Corriger une recherche qui oublie la dernière case",
+        "situation": "La fonction `chercher(positions, cible)` du programme de départ oublie une position lors de son parcours. Elle peut annoncer `-1` alors que la cible est présente. Elle doit renvoyer le premier indice trouvé, à partir de `0`, ou `-1` en cas d’absence, sans modifier la liste. `positions` est une liste, éventuellement vide, de tuples de deux entiers ; `cible` est un tuple de deux entiers.",
+        "work": [
+          "Contrat — `chercher(positions, cible)` reçoit une liste `positions`, éventuellement vide, de tuples de deux entiers, et un tuple `cible` de deux entiers. Elle renvoie un entier : l’indice de la première occurrence, à partir de `0`, ou `-1` si la cible est absente. Elle ne modifie pas la liste et ne commande aucune action.\nDiagnostic puis correction — Charge l’amorce, prévois son résultat pour la dernière position et exécute-la. Corrige la recherche pour examiner aussi cette position, avec `for`, `if` et des accès indexés ; `list.index` est interdit. Une sortie incorrecte peut survenir sans exception Python.\nApplication au trajet — Garde le collecteur fourni sans le modifier, une seule collecte, puis l’affichage de `chercher(positions, positions[-1])`. Ici, `positions[-1]` désigne la dernière position d’un journal non vide : le départ est enregistré même sans déplacement.\nEssais séparés — Vérifie aussi une liste vide et deux positions identiques ; retire leurs affichages supplémentaires du programme de trajet.",
+          "Diagnostic — Ouvre le programme de départ selon la rubrique « Préparation du code » dans « A · Comprendre la notion ». Il contient le collecteur de positions et la recherche erronée. Prévois le résultat pour la dernière position du trajet, puis exécute. Quels indices la boucle examine-t-elle ? Pourquoi l’erreur peut-elle passer sans exception Python ?",
+          "Correction — Corrige la borne de la recherche avec `for`, `if` et des accès indexés ; n’utilise pas `list.index`. Conserve le collecteur fourni, qui construit réellement les positions pendant les déplacements. La recherche elle-même ne commande aucune action.",
+          "Vérification — Garde l’unique collecte et l’affichage `chercher(positions, positions[-1])` du programme principal : `positions[-1]` désigne la dernière position. Le trajet de deux déplacements doit afficher 2 ; celui de quatre, 4 ; celui de zéro, 0. Le journal contient toujours le départ : même sans déplacement, il n’est pas vide.",
+          "Essais séparés — Vérifie `chercher([], (0, 1))` : retour `-1` ; puis la recherche de `(2, 2)` dans [`(2, 2)`, `(2, 2)`] : retour 0. Retire ces affichages supplémentaires du programme de trajet. Explique avec l’enseignant pourquoi ces deux exemples et le cas à un seul élément sont utiles."
+        ],
+        "prerequisites": "Après « Rechercher la première visite d’une position » : `range`, indices valides, première occurrence, `return` et cas de liste vide. La collecte de positions est fournie dans le programme à corriger.",
+        "course": "Préparation du code\nDans « Mon code : brouillons et récupération », choisis « Remplacer par l’amorce de cet exercice » et confirme après avoir conservé ton travail. L’amorce contient le programme complet à diagnostiquer, avec une collecte et une recherche. Le bouton de préparation du terrain garde le code courant.\n\nRappels\nLa borne finale de `range` est exclue. L’indice `-1`, utilisé dans `positions[-1]`, donne le dernier élément d’une liste non vide ; le retour `-1` de `chercher` est une convention différente pour signaler une absence. Le collecteur utilise `duck.obstacle_devant()` et `duck.avancer()`, sans argument : le premier observe si la case devant est bloquée sans bouger le robot ; le second avance d’une case et provoque une erreur si elle est bloquée.",
+        "prediction": "Pour une liste qui ne contient que le départ, quels indices la boucle erronée visite-t-elle ? Quel résultat la recherche correcte doit-elle renvoyer si la cible est ce départ ?",
+        "explain": "Identifie l’indice oublié, explique la borne corrigée et montre que le retour d’absence n’interrompt pas le parcours trop tôt. Distingue liste vide et trajet sans déplacement.",
+        "hints": [
+          "Compare les indices parcourus à tous les indices valides de la liste.",
+          "Une liste contenant un seul élément permet de voir immédiatement si cet élément est examiné.",
+          "Vérifie la borne exclue de `range` et garde le retour d’absence après le parcours."
+        ],
+        "exampleNotes": "Amorce incorrecte : la collecte fonctionne, mais la recherche affiche `-1` au lieu de l’indice de la dernière position. Corrige la recherche, sans changer le collecteur.\nAprès correction, même programme sur les trois terrains :\n« Deux pas · (0, 1) vers (2, 1) » : deux déplacements, arrivée en (2, 1), cap Est ; console `2`.\n« Quatre pas · (0, 1) vers (4, 1) » : quatre déplacements, arrivée en (4, 1), cap Est ; console `4`.\n« Zéro pas · départ déjà bloqué » : aucune action ; journal `[(0, 1)]` ; console `0`.\nEssais de fonction séparés : `chercher([], (0, 1))` renvoie `-1` ; `chercher([(2, 2), (2, 2)], (2, 2))` renvoie `0`, la première occurrence. La recherche ne produit aucun déplacement supplémentaire.\n\nDans [`(0, 1)`, `(1, 1)`, `(2, 1)`], la recherche de `(2, 1)` doit renvoyer 2. Dans [`(0, 1)`], la recherche de `(0, 1)` doit renvoyer 0. La liste vide appartient aux essais de recherche seule, pas au journal d’un robot dont le départ est enregistré."
+      },
+      "transfert": {
+        "title": "Rechercher des positions et compter les comparaisons sur un nouveau trajet",
+        "situation": "Tu vas construire la liste des positions d’un nouveau trajet, puis y rechercher deux cases sans déplacer à nouveau Microduck. Deux fonctions sont à reprendre :\n• `relever_positions(x, y, dx)`, de « Mémoriser les positions successives de Microduck », renvoie la liste des tuples (colonne, ligne) visités, dans l’ordre, départ inclus. Les entiers `x` et `y` sont la colonne et la ligne de départ ; `dx` vaut `1` vers l’Est ou `-1` vers l’Ouest. Le trajet est horizontal, sans rotation.\n• `chercher_compte(positions, cible)`, de « Compter les comparaisons d’une recherche », renvoie `(indice, comparaisons)` : premier indice de la cible à partir de `0`, ou `-1` si elle est absente, et nombre de comparaisons entre une position et la cible, y compris celui qui la trouve. La cible est un tuple de deux entiers. La recherche ne modifie pas la liste et ne bouge pas le robot.\n\nSans argument, `duck.obstacle_devant()` renvoie `True` si la prochaine case est occupée ou hors de la grille, sinon `False` ; il ne déplace pas le robot. `duck.avancer()` avance d’une case, sans argument, et provoque une erreur si elle est bloquée. Le programme calcule les coordonnées.",
+        "work": [
+          "Réutilise `relever_positions(x, y, dx)` pour collecter une seule fois les positions du nouveau trajet, puis `chercher_compte(positions, cible)` pour rechercher `(2, 2)` et `(9, 2)` sur cette même liste. La recherche renvoie `(indice, comparaisons)` : premier indice trouvé ou `-1`, et nombre de comparaisons effectuées. Prévois ces retours avant d’exécuter.",
+          "Collecte : `x` et `y` sont les coordonnées entières du départ (colonne, ligne) ; `dx` est l’entier `1` vers l’Est ou `-1` vers l’Ouest. `relever_positions(x, y, dx)` avance jusqu’au blocage, sans rotation ni affichage, et renvoie la liste des tuples de deux entiers visités, départ inclus ; `y` reste constant. Recherche : `positions` est cette liste et `cible` un tuple de deux entiers. `chercher_compte(positions, cible)` ne modifie pas la liste et ne déplace pas le robot. Elle renvoie un tuple de deux entiers : indice à partir de `0`, ou `-1` en cas d’absence ; et nombre de comparaisons entre une position et la cible, test qui trouve la cible inclus. Pour une liste vide, le retour est `(-1, 0)`. Garde les deux définitions dans ton code, en reprenant une copie de ton brouillon de « Compter les comparaisons d’une recherche ». Prépare l’évaluation puis ouvre le transfert à la demande de l’enseignant.",
+          "Reprends ton brouillon de « Compter les comparaisons d’une recherche » dans « Mon code : brouillons et récupération ». Reviens ici et choisis « Utiliser ce code pour cet exercice » pour travailler sur une copie. Garde les deux définitions dans le programme courant, en complétant depuis ton travail de collecte si nécessaire ; retire les anciens appels principaux.",
+          "Prépare l’évaluation puis, à la demande de l’enseignant, utilise « Commencer le transfert » en bas de page. Lis le départ et le cap révélés. Choisis les arguments du collecteur ; prévois la liste et les résultats pour les cibles `(2, 2)` puis `(9, 2)`.",
+          "Construis la liste une seule fois avec `relever_positions`, puis effectue les deux recherches sur cette même liste. Pour chaque appel, récupère le tuple renvoyé et affiche ses deux entiers séparés par un espace, sur une ligne. N’affiche pas le tuple avec ses parenthèses. L’organisation des parcours est libre ; les positions et les comptes doivent être calculés.",
+          "Vérifie trois déplacements jusqu’en `(1, 2)`, vers l’Ouest. Affichage attendu :\n2 3\n`-1` 4\nExplique pourquoi la première recherche trouve la cible à l’indice 2 après trois comparaisons et pourquoi la seconde examine les quatre positions."
+        ],
+        "prerequisites": "Synthèse après « Mémoriser les positions successives de Microduck » et « Compter les comparaisons d’une recherche » : collecte paramétrée, première occurrence, cas d’absence, compteur de comparaisons et décomposition d’un tuple.",
+        "course": "L’objectif Python est de réutiliser une collecte et un algorithme de recherche sur ses données. Une collecte suffit pour plusieurs recherches : seules ses commandes font bouger le robot. Un trajet de `n` déplacements fournit `n + 1` positions, puisque le départ est enregistré. Les comparaisons ne sont ni les déplacements ni une mesure de temps. Pour décomposer un retour, on peut écrire `indice, compte = chercher_compte(positions, cible)`, puis `print(indice, compte)`.",
+        "prediction": "Après révélation, construis la liste attendue dans l’ordre des visites. Pour chaque cible, note l’indice renvoyé et le nombre de comparaisons avant toute exécution.",
+        "explain": "Explique les trois arguments du collecteur, l’unique collecte, la première occurrence, le résultat `-1` et chaque comparaison comptée. Montre que rechercher une seconde cible ne déplace pas le robot.",
+        "hints": [
+          "Sépare les deux tâches : construire la liste à partir du trajet, puis analyser cette liste.",
+          "La liste commence par le départ, même si aucun déplacement n’est possible. Vers l’Ouest, les colonnes diminuent mais les indices de la liste augmentent.",
+          "Déroule les tests dans l’ordre des positions. Compte aussi le test qui trouve la cible ; si elle est absente, toutes les positions sont comparées."
+        ],
+        "exampleNotes": "Après une seule collecte, afficher pour `(2, 2)`, puis `(9, 2)`, les deux entiers renvoyés, séparés par un espace, sur deux lignes ; ne pas afficher les parenthèses du tuple. Détermine les positions, les indices et les comptes à partir du terrain révélé. Les recherches ne doivent provoquer aucun déplacement supplémentaire ; une comparaison n’est ni un pas du robot ni une mesure de temps.\n\nDans [`(0, 1)`, `(1, 1)`, `(2, 1)`], une recherche de `(1, 1)` renvoie `(1, 2)` : indice 1, deux comparaisons. Une cible absente donne `(-1, 3)`. Ces exemples décrivent le retour de la recherche, pas des commandes du robot."
+      }
+    }
+  }
+}

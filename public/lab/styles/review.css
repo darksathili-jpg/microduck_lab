@@ -1,0 +1,11 @@
+#local-review{border-top:2px solid var(--ink);margin-top:.75rem;padding-top:.65rem;overflow-wrap:anywhere}
+#local-review h3{font-size:1rem;margin:.1rem 0 .5rem}#local-review p{margin:.45rem 0}#review-message:empty{display:none}
+#review-history{margin-top:.65rem}#review-history label{display:block;margin:.6rem 0 .25rem}#review-versions{width:100%;min-width:0}#review-history input{max-width:100%}
+#review-dialog{box-sizing:border-box;width:min(960px,94vw);max-height:90vh;overflow:auto;background:var(--panel);color:var(--ink);border:3px solid var(--ink);border-radius:8px;padding:1rem 1.2rem}
+#review-dialog::backdrop{background:rgb(10 24 38 / .65)}.review-dialog-top{display:flex;justify-content:space-between;align-items:start;gap:1rem}.review-dialog-top h2{margin:0}
+#review-dialog pre{white-space:pre;overflow:auto;max-width:100%;min-height:0;max-height:26rem;padding:.65rem;background:var(--code);color:var(--code-ink);font:15px/1.62 Consolas,monospace}
+#review-code{font:inherit;background:none;color:inherit}#review-dialog p,#review-dialog li{overflow-wrap:anywhere}#review-dialog textarea{box-sizing:border-box;width:100%;font:inherit;background:var(--panel);color:var(--ink)}
+#review-trials{padding-left:1.4rem}#review-trials h4{margin-bottom:.4rem}#review-dialog button{white-space:normal}#review-dialog details{margin:.7rem 0}#review-existing-decision{font-weight:700}#review-decision-history{padding-left:1.4rem}#review-decision-history button{margin:.3rem 0;text-align:left}
+[data-state=local-favorable]{--state:var(--success)}[data-state=local-correction]{--state:var(--fix)}
+@media(max-width:600px){#review-dialog{padding:.7rem;width:96vw;max-height:94vh}.review-dialog-top h2{font-size:1.15rem}#review-dialog pre{font-size:13px}#local-review .controls{gap:.4rem}}
+html[data-theme=projector] #review-dialog pre{font-size:20px;line-height:1.7}

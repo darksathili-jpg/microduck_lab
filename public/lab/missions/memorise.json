@@ -1,0 +1,8 @@
+{
+ "id":"memorise","title":"Microduck mémorise","stages":[
+  {"id":"trajet","title":"01 · Une liste de commandes","objective":"Construire et parcourir les commandes A, D, A : avancer, tourner à droite, avancer.","hints":["Une liste garde les éléments dans leur ordre.","Le premier indice est 0 ; le dernier vaut len(liste) − 1.","Parcours les éléments ou leurs indices, puis appelle la commande Duck correspondante."],"terrains":[
+   {"id":"instructions","name":"Itinéraire A, D, A","width":4,"height":4,"start":[0,1],"goal":[1,2],"heading":1,"obstacles":[]}]},
+  {"id":"journal","title":"02 · Mémoriser les observations","allowTransfer":true,"objective":"Renvoyer la liste des observations avant chaque pas et celle du blocage final.","hints":["Un journal vide est un cas possible à initialiser avant les observations.","append ajoute une observation à la fin ; le capteur ne déplace pas le robot.","Enregistre avant chaque déplacement et n’oublie pas l’observation True qui termine le parcours."],"terrains":[
+   {"id":"releve-court","name":"Deux déplacements","width":5,"height":3,"start":[0,1],"goal":[2,1],"heading":1,"obstacles":[[3,1]]},
+   {"id":"releve-long","name":"Quatre déplacements","width":7,"height":3,"start":[0,1],"goal":[4,1],"heading":1,"obstacles":[[5,1]]},
+   {"id":"releve-zero","name":"Observation sans déplacement","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}]}]}

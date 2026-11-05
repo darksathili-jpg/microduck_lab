@@ -1,0 +1,25 @@
+/* Explicit Python notation, shared with teacher previews. Existing V2.1 tokens. */
+code.python-fragment{font-family:Consolas,"Cascadia Mono",monospace;font-size:.96em;background:var(--blue);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:.02em .22em;overflow-wrap:anywhere;box-decoration-break:clone}
+pre.python-block{min-height:0;max-height:none;margin:.35rem 0;padding:.5rem .7rem;white-space:pre-wrap;overflow-wrap:anywhere;font:15px/1.5 Consolas,monospace}
+pre.python-block code.python-fragment{background:transparent;border:0;padding:0;color:inherit;font-size:inherit}
+#pilot-example{min-height:0;white-space:pre-wrap}#pilot-example code{background:transparent;color:inherit;border:0;padding:0}
+#pilot-course,#pilot-example-notes{white-space:pre-wrap;line-height:1.65;color:var(--muted)}
+.challenge-result{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1rem}.challenge-result>div{min-width:0}#challenge-text,#action-expected{line-height:1.6;font-size:1rem;white-space:pre-line}
+#action-expected{padding:.6rem .8rem;background:var(--blue);border-left:4px solid var(--accent);border-radius:3px}.code-jump{display:inline-block;margin:.6rem 0;font-weight:750;text-underline-offset:3px}#statement-reference{font-size:.85rem;padding:.4rem 0}
+#action-essentials{background:var(--blue);padding:.5rem .75rem;margin:.5rem 0;border-left:4px solid var(--accent);font-size:.9rem;line-height:1.55}#action-essentials:empty{display:none}#action-essentials h3{font-size:.88rem;margin:0 0 .25rem}#action-essentials p{margin:.35rem 0}
+#learning-help{margin-top:1rem}#learning-help h2,#pilot-understand h2{font-size:1rem;margin:.6rem 0}#learning-help details{padding:.65rem 0}#learning-help[hidden],#pilot-understand[hidden]{display:none}
+#pilot-understand{border-top:3px solid var(--accent);margin-top:1rem}#pilot-understand p{font-size:1rem;line-height:1.65}#learning-help #pilot-notes{font:inherit;min-height:6rem}
+/* An active exercise uses a text heading; the immersive figure belongs to the welcome view. */
+.action-pilot .compact-heading{display:block;min-height:0;margin-bottom:.7rem;border-radius:4px;overflow:hidden}
+.action-pilot .compact-heading>div{padding:.5rem .8rem;border-right:0;min-width:0}
+.action-pilot .compact-heading figure,.action-pilot .compact-heading .overline{display:none}
+.action-pilot .compact-heading h2{font-size:1.15rem;line-height:1.25;max-width:none;margin:0;overflow-wrap:anywhere}
+.action-pilot #atelier-objective{max-width:none;margin:.2rem 0 0;font-size:.85rem;line-height:1.45}
+.compact-heading figure img{object-fit:contain;object-position:center;background:var(--panel)}
+.action-pilot #learning-feedback[data-state=stale]{min-height:0;padding:.4rem .7rem}.action-pilot #learning-feedback[data-state=stale] #feedback-icon,.action-pilot #learning-feedback[data-state=stale] #execution-feedback,.action-pilot #learning-feedback[data-state=stale] #next-action{display:none}.action-pilot #learning-feedback[data-state=stale] h2{font-size:.85rem}.action-pilot #learning-feedback[data-state=stale] #feedback-label{font-size:.65rem}
+.action-pilot #pilot-ready{display:none}.action-pilot #statement{padding-bottom:0}.action-pilot #statement h2{font-size:1.35rem;margin:.3rem 0}.action-pilot #statement-type{margin:.3rem 0;font-size:.7rem}.action-pilot #activity-statement>summary{font-size:.8rem}.action-pilot #pilot-content{display:block}.action-pilot #statement h3{font-size:.95rem;margin:.4rem 0}.action-pilot #action-pilot>.code-jump{margin:.3rem 0}.action-pilot #statement-reference>summary{font-weight:550}.action-pilot .program .controls{margin:.4rem 0}
+.result-cases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}.result-cases h4{font-size:.8rem;margin:.3rem 0}.result-cases pre{font-size:14px}.result-intro{font-size:.85rem;margin:0 0 .3rem}
+html[data-theme=projector] #challenge-text,html[data-theme=projector] #action-expected,html[data-theme=projector] #action-essentials{font-size:1rem}html[data-theme=projector] pre.python-block{font-size:18px}
+@media(max-width:700px){.challenge-result{grid-template-columns:1fr;gap:.5rem}.action-pilot .compact-heading figure{height:86px}.action-pilot .compact-heading>div{padding:.5rem .7rem}.action-pilot .compact-heading h2{font-size:1.15rem}.action-pilot #statement h2{font-size:1.2rem}#challenge-text,#action-expected,#action-essentials{font-size:1rem}.program #code{font-size:14px}.result-cases{grid-template-columns:1fr}.result-cases pre{font-size:15px}.code-jump{padding:.4rem 0}#statement-reference summary{line-height:1.6}}
+pre.python-block,#pilot-example{background:var(--code);color:var(--code-ink);font:15px/1.62 Consolas,monospace}
+html[data-theme=projector] pre.python-block,html[data-theme=projector] #pilot-example,html[data-theme=projector] .result-cases pre{font-size:20px;line-height:1.7}

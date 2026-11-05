@@ -1,0 +1,12 @@
+{
+  "id":"analyse","title":"Microduck analyse sa trajectoire",
+  "stages":[{"id":"atelier","title":"Journal de cases et recherche séquentielle","allowTransfer":true,
+    "objective":"Construire le journal logique du trajet, chercher une case et compter les comparaisons sans modifier les règles du robot.",
+    "hints":["Distingue la collecte du journal et son traitement.","Une liste de n déplacements contient n + 1 cases si le départ est inclus.","Compare première, dernière, absente et liste vide pour éprouver la recherche."],
+    "terrains":[
+      {"id":"trace-courte","name":"Deux pas · (0, 1) vers (2, 1)","width":5,"height":3,"start":[0,1],"goal":[2,1],"heading":1,"obstacles":[[3,1]]},
+      {"id":"trace-longue","name":"Quatre pas · (0, 1) vers (4, 1)","width":7,"height":3,"start":[0,1],"goal":[4,1],"heading":1,"obstacles":[[5,1]]},
+      {"id":"trace-zero","name":"Zéro pas · départ déjà bloqué","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}
+    ]
+  }]
+}

@@ -1,0 +1,6 @@
+{
+ "id":"cartographie","title":"Microduck cartographie","stages":[
+  {"id":"observations","title":"01 · Des observations repérées","allowTransfer":true,"objective":"Enregistrer le booléen du capteur à chaque case parcourue, avec une clé tuple (x, y). Sur les terrains d’entraînement, partir de (0, 1) vers l’Est.","hints":["Sépare la clé qui repère une case de la valeur observée.","Lis la carte dans la console ; les coordonnées locales suivent les commandes du robot.","Utilise des tuples d’entiers comme clés, puis parcours items() pour lire clés et valeurs."],"terrains":[
+   {"id":"carte-courte","name":"Carte de deux pas","width":5,"height":3,"start":[0,1],"goal":[2,1],"heading":1,"obstacles":[[3,1]]},
+   {"id":"carte-longue","name":"Carte de quatre pas","width":7,"height":3,"start":[0,1],"goal":[4,1],"heading":1,"obstacles":[[5,1]]},
+   {"id":"carte-zero","name":"Une seule observation","width":4,"height":3,"start":[0,1],"goal":[0,1],"heading":1,"obstacles":[[1,1]]}]}]}

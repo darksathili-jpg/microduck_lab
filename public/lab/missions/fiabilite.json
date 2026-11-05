@@ -1,0 +1,11 @@
+{
+  "id":"fiabilite","title":"Microduck contrôle ses commandes",
+  "stages":[{"id":"atelier","title":"Contrats, portée et jeux de tests","allowTransfer":true,
+    "objective":"Écrire et tester des fonctions de commande spécifiées. Distinguer précondition, résultat et portée locale.",
+    "hints":["Quelles entrées sont autorisées ? Quel résultat est promis ?","Tester zéro avant un appel normal aide à révéler les erreurs de borne.","Une assertion teste une condition ; elle ne prouve pas tous les cas et ne remplace pas la sécurité physique."],
+    "terrains":[
+      {"id":"contrat-court","name":"Deux pas depuis (0, 1), cap Est","width":6,"height":3,"start":[0,1],"goal":[2,1],"heading":1,"obstacles":[[4,1]]},
+      {"id":"contrat-autre","name":"Deux pas depuis (1, 1), cap Est","width":6,"height":3,"start":[1,1],"goal":[3,1],"heading":1,"obstacles":[[5,1]]}
+    ]
+  }]
+}
